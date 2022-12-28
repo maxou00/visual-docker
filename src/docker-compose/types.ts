@@ -17,5 +17,17 @@ export interface NetworkConfig {
     external?: boolean;
     internal?: boolean;
     name?: string;
+    labels?: any;
     ipam?: IPAMConfig;
+}
+
+export interface VolumeConfig {
+    label: string;
+    name?: string;
+    external?: {
+        name: string;
+    };
+    type?: any;
+    driver_opts?: any;
+    labels?: any;
 }

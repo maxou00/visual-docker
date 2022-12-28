@@ -7,38 +7,28 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Heading,
-  Modal,
-  ModalBody,
   ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   ModalProps,
   VStack,
 } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { useImmer } from "use-immer";
-import { NetworkEditor } from ".";
+import { VolumeEditor } from ".";
 import { PrimaryButton } from "../../../../components/Buttons/Primary";
 import { useDockerComposeProject } from "../../../providers/DockerComposeProvider";
-import { NetworkConfig } from "../../../types";
+import { VolumeConfig } from "../../../types";
 
-export function CreateNetworkModal(props: Omit<ModalProps, "children">) {
-  const [content, setContent] = useImmer<{ item: NetworkConfig }>({
+export function CreateVolumeModal(props: Omit<ModalProps, "children">) {
+  const [content, setContent] = useImmer<{ item: VolumeConfig }>({
     item: {
       label: "",
-      internal: true,
-      external: false,
-      driver: "bridge",
-      driver_opts: {},
     },
   });
 
-  const { addNetwork } = useDockerComposeProject();
+  const { addVolume } = useDockerComposeProject();
 
   const onSubmit = useCallback(() => {
-    addNetwork(content.item);
+    addVolume(content.item);
     if (props.onClose) {
       props.onClose();
     }
@@ -62,7 +52,7 @@ export function CreateNetworkModal(props: Omit<ModalProps, "children">) {
         </DrawerHeader>
         <DrawerBody>
           <VStack alignItems="flex-start" spacing={4}>
-            <NetworkEditor
+            <VolumeEditor
               value={content.item}
               onChange={(update) => {
                 setContent((draft) => {
@@ -73,26 +63,26 @@ export function CreateNetworkModal(props: Omit<ModalProps, "children">) {
           </VStack>
         </DrawerBody>
         <DrawerFooter>
-          <PrimaryButton onClick={onSubmit}>Add this network</PrimaryButton>
+          <PrimaryButton onClick={onSubmit}>Add this volume</PrimaryButton>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
   );
 }
 
-export function UpdateNetworkModal(
-  props: Omit<ModalProps, "children"> & { value: NetworkConfig }
+export function UpdateVolumeModal(
+  props: Omit<ModalProps, "children"> & { value: VolumeConfig }
 ) {
-  const [content, setContent] = useImmer<{ item: NetworkConfig }>({
+  const [content, setContent] = useImmer<{ item: VolumeConfig }>({
     item: {
       ...props.value,
     },
   });
 
-  const { addNetwork } = useDockerComposeProject();
+  const { addVolume } = useDockerComposeProject();
 
   const onSubmit = useCallback(() => {
-    addNetwork(content.item);
+    addVolume(content.item);
     if (props.onClose) {
       props.onClose();
     }
@@ -117,7 +107,7 @@ export function UpdateNetworkModal(
         </DrawerHeader>
         <DrawerBody>
           <VStack alignItems="flex-start" spacing={4}>
-            <NetworkEditor
+            <VolumeEditor
               value={content.item}
               onChange={(update) => {
                 setContent((draft) => {

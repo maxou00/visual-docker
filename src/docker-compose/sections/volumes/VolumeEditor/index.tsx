@@ -14,25 +14,18 @@ import {
 } from "@chakra-ui/react";
 import { ChangeEvent, useCallback, useEffect } from "react";
 import { useImmer } from "use-immer";
-import { NetworkConfig } from "../../../types";
+import { NetworkConfig, VolumeConfig } from "../../../types";
 import { LabelsEditor } from "../../../utils/LabelsEditor";
-import { DriverEditor } from "./DriverEditor";
-import { IpamEditor } from "./IpamEditor";
-import { NetworkVisibilityEditor } from "./VisibilityEditor";
 
 interface Props {
-  value?: NetworkConfig;
-  onChange: (config: NetworkConfig) => any;
+  value?: VolumeConfig;
+  onChange: (config: VolumeConfig) => any;
 }
 
-export function NetworkEditor(props: Props) {
-  const [content, setContent] = useImmer<NetworkConfig>(
+export function VolumeEditor(props: Props) {
+  const [content, setContent] = useImmer<VolumeConfig>(
     props.value || {
       label: "",
-      internal: true,
-      external: false,
-      driver: "bridge",
-      driver_opts: {},
     }
   );
 
@@ -56,37 +49,26 @@ export function NetworkEditor(props: Props) {
     });
   }, []);
 
-  const onExternalChange = useCallback((is: boolean) => {
+  const onExternalChange = useCallback((external: VolumeConfig["external"]) => {
     setContent((draft) => {
-      draft.external = is;
-      draft.internal = !is;
-      if (!is) {
-        draft.name = undefined;
-      }
-      if (is) {
-        draft.driver = undefined;
+      draft.external = external;
+      if (external) {
+        draft.type = undefined;
         draft.driver_opts = undefined;
-        draft.enable_ipv6 = undefined;
-        draft.ipam = undefined;
+        draft.labels = undefined;
       }
     });
   }, []);
 
   const onDriverChange = useCallback(
-    (type: NetworkConfig["driver"], options: NetworkConfig["driver_opts"]) => {
+    (type: VolumeConfig["type"], options: VolumeConfig["driver_opts"]) => {
       setContent((draft) => {
-        draft.driver = type;
+        draft.type = type;
         draft.driver_opts = options;
       });
     },
     []
   );
-
-  const onIpamChange = useCallback((options: NetworkConfig["ipam"]) => {
-    setContent((draft) => {
-      draft.ipam = options;
-    });
-  }, []);
 
   const onLabelsChange = useCallback((options: NetworkConfig["labels"]) => {
     setContent((draft) => {
@@ -119,10 +101,6 @@ export function NetworkEditor(props: Props) {
         <Heading fontSize="md">Advanced Options</Heading>
       </HStack>
       <VStack alignItems="flex-start" spacing={2}>
-        <NetworkVisibilityEditor
-          onSwitch={onExternalChange}
-          external={content.external}
-        />
         <FormControl>
           <FormLabel>Custom name</FormLabel>
           <Input
@@ -137,45 +115,22 @@ export function NetworkEditor(props: Props) {
           </FormHelperText>
           <FormHelperText>
             While the label will be used in the generated compose file, the name
-            is the custom name you give to this network. It is unscoped.
+            is the custom name you give to this network globally. It is
+            unscoped.
           </FormHelperText>
         </FormControl>
         {!content.external && (
-          <FormControl>
-            <Checkbox
-              isChecked={content.enable_ipv6}
-              colorScheme="primary"
-              onChange={(ev) => {
-                setContent((draft) => {
-                  draft.enable_ipv6 = ev.currentTarget.checked;
-                });
-              }}
-            >
-              Enable IPv6
-            </Checkbox>
-          </FormControl>
-        )}
-        {!content.external && (
-          <DriverEditor
-            type={content.driver}
-            options={content.driver_opts}
-            onChange={onDriverChange}
-          />
-        )}
-        {!content.external && (
-          <IpamEditor config={content.ipam} onChange={onIpamChange} />
-        )}
-        {!content.external && (
           <LabelsEditor value={content.labels} onChange={onLabelsChange} />
         )}
-        {
-          content.external && <Alert colorScheme="orange" rounded="md">
+        {content.external && (
+          <Alert colorScheme="orange" rounded="md">
             <AlertTitle>Other options have been disabled.</AlertTitle>
             <AlertDescription>
-              External networks are not managed by compose. Thus, advanced options are useless.
+              External volumes are not managed by compose. Thus, advanced
+              options are useless.
             </AlertDescription>
           </Alert>
-        }
+        )}
       </VStack>
     </VStack>
   );

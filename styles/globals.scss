@@ -1,15 +1,9 @@
 $container: 1280px;
 
 :root {
-  --colors-background: #181818;
-  --colors-surface: #000000;
-  --colors-on-background: #f9f9f9;
-  --colors-on-surface: #f9f9f9;
-
   --colors-divider-on-background: #f9f9f940;
   --colors-divider-on-surface: #f9f9f940;
-
-  --colors-primary: #ff4a17;
+  
   --colors-on-primary: #fafafa;
 
   --fonts-heading: "Poppins", sans-serif;
@@ -38,7 +32,7 @@ body {
   width: 100%;
   min-height: 100%;
   overflow-x: hidden;
-  background-color: var(--colors-background);
+  background-color: var(--app-colors-background);
 }
 
 h1,
@@ -58,15 +52,15 @@ a {
 .app {
   width: 100%;
   min-height: 100%;
-  background: var(--colors-background);
-  color: var(--colors-on-background);
+  background: var(--app-colors-background);
+  color: var(--app-colors-onBackground);
   font-family: var(--fonts-body);
 }
 
 .trait {
   width: 24px;
   height: 2px;
-  background: var(--colors-on-surface);
+  background: var(--app-colors-onSurface);
   display: inline-block;
   margin-bottom: 4px;
 }

@@ -10,26 +10,25 @@ import { Pen } from "phosphor-react";
 import { useState } from "react";
 import { PrimaryButton } from "../../../components/Buttons/Primary";
 import { useDockerComposeProject } from "../../providers/DockerComposeProvider";
-import { CreateNetworkModal, UpdateNetworkModal } from "./NetworkEditor/modal";
+import { CreateVolumeModal, UpdateVolumeModal } from "./VolumeEditor/modal";
 
-export function ProjectNetworks() {
-  const addNetworkModal = useDisclosure();
-  const editNetworkModal = useDisclosure();
+export function ProjectVolumes() {
+  const addVolumeModal = useDisclosure();
+  const editVolumeModal = useDisclosure();
   const { state: composer } = useDockerComposeProject();
-
-  const [netIndex, setNetIndex] = useState(-1);
+  const [volIndex, setVolIndex] = useState(-1);
 
   return (
     <VStack bg="surface" w="full" alignItems="flex-start" spacing={4} p={4} rounded="md">
-      <Heading fontSize="lg">Your networks are here.</Heading>
+      <Heading fontSize="lg">Your Volumes are here.</Heading>
       <Text maxW="54ch" fontSize="sm" opacity={0.55}>
-        Networks bring exchange capability within your environment, helping you
-        to tie services and containers up.
+        Volumes bring data storage capability within your environment, allowing
+        you to persist information across containers restarts.
       </Text>
-      <Link href="https://docs.docker.com/network/">Read more</Link>
+      <Link href="https://docs.docker.com/storage/volumes/">Read more</Link>
 
       <VStack w="full" spacing={2} alignItems="flex-start">
-        {composer.networks.map((net, i) => {
+        {composer.volumes.map((vol, i) => {
           return (
             <HStack
               bg="background"
@@ -39,14 +38,14 @@ export function ProjectNetworks() {
               w="full"
               cursor="pointer"
               justifyContent="space-between"
-              key={net.label}
+              key={vol.label}
             >
-              <Text fontFamily="heading">{net.label}</Text>
+              <Text fontFamily="heading">{vol.label}</Text>
               <PrimaryButton
                 rounded="md"
                 onClick={() => {
-                  setNetIndex(i);
-                  editNetworkModal.onOpen();
+                  setVolIndex(i);
+                  editVolumeModal.onOpen();
                 }}
                 leftIcon={<Pen weight="fill" size={16} />}
               >
@@ -57,18 +56,18 @@ export function ProjectNetworks() {
         })}
       </VStack>
 
-      <PrimaryButton rounded="md" onClick={() => addNetworkModal.onOpen()}>
+      <PrimaryButton rounded="md" onClick={() => addVolumeModal.onOpen()}>
         {composer.networks.length === 0
           ? "Start by creating one"
-          : "Add another network"}
+          : "Add a volume"}
       </PrimaryButton>
-      <CreateNetworkModal {...addNetworkModal} />
-      {netIndex > -1 && (
-        <UpdateNetworkModal
-          value={composer.networks[netIndex]}
-          {...editNetworkModal}
+      <CreateVolumeModal {...addVolumeModal} />
+      {volIndex > -1 && (
+        <UpdateVolumeModal
+          value={composer.volumes[volIndex]}
+          {...editVolumeModal}
           onClose={() => {
-            editNetworkModal.onClose();
+            editVolumeModal.onClose();
           }}
         />
       )}

@@ -1,5 +1,4 @@
-import { ChakraProvider, StyleFunctionProps, theme } from '@chakra-ui/react'
-
+import { ChakraProvider, StyleFunctionProps, theme } from '@chakra-ui/react';
 // 1. Import the extendTheme function
 import { extendTheme } from '@chakra-ui/react'
 
@@ -18,8 +17,8 @@ const colors = {
         800: '#4f0008',
         900: '#210009',
     },
-    background: "#181818",
-    surface: "#000000",
+    background: "#090b10",
+    surface: theme.colors.gray[900],
     onPrimary: "#fafafa",
     onBackground: "#f9f9f9",
     onSurface: "#f9f9f9"

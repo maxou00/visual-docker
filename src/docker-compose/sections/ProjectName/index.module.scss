@@ -5,9 +5,9 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    background-color: var(--colors-background);
+    background-color: var(--app-colors-background);
 
-    color: var(--colors-on-background);
+    color: var(--app-colors-onBackground);
 }
 
 .container{
@@ -44,8 +44,8 @@
 .social {
     all: unset;
     background: transparent;
-    fill: var(--colors-on-background);
-    border: 1px solid var(--colors-on-background);
+    fill: var(--app-colors-onBackground);
+    border: 1px solid var(--app-colors-onBackground);
     width: 36px;
     height: 36px;
     display: flex;
@@ -56,7 +56,7 @@
     transition: all 250ms linear;
 
     &:hover{
-        border: 1px solid var(--colors-primary);
+        border: 1px solid var(--app-colors-primary-500);
     }
 }
 

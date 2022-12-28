@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { DockerComposeProject } from "../src/docker-compose";
+import { DockerComposeProject } from "../src/docker-compose/sections";
 import { DockerComposeProvider } from "../src/docker-compose/providers/DockerComposeProvider";
 import styles from "../styles/Home.module.css";
 

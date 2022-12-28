@@ -1,20 +1,21 @@
 import { IDockerComposeState } from ".";
 import { Draft } from "immer";
-import { NetworkConfig } from "../types";
+import { NetworkConfig, VolumeConfig } from "../types";
 
 export const initialState: IDockerComposeState = {
     project: {
         name: ""
     },
-    networks: []
+    networks: [],
+    volumes: []
 }
 
 export function stateReducer(draft: Draft<IDockerComposeState>, action: any) {
 
-    if(action.type === "SET_PROJECT_NAME") {
+    if (action.type === "SET_PROJECT_NAME") {
         draft.project.name = action.payload;
     }
-    else if(action.type === "PUT_NETWORK") {
+    else if (action.type === "PUT_NETWORK") {
         let net = action.payload as NetworkConfig;
         let collisionIndex = draft.networks.findIndex((n) => n.label === net.label);
         if (collisionIndex > -1) {
@@ -26,6 +27,20 @@ export function stateReducer(draft: Draft<IDockerComposeState>, action: any) {
             let cpy = [...draft.networks];
             cpy.push(net);
             draft.networks = cpy;
+        }
+    }
+    else if (action.type === "PUT_VOLUME") {
+        let net = action.payload as VolumeConfig;
+        let collisionIndex = draft.volumes.findIndex((n) => n.label === net.label);
+        if (collisionIndex > -1) {
+            let cpy = [...draft.volumes];
+            cpy[collisionIndex] = net;
+            draft.volumes = cpy;
+        }
+        else {
+            let cpy = [...draft.volumes];
+            cpy.push(net);
+            draft.volumes = cpy;
         }
     }
 
