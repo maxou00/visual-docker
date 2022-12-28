@@ -1,11 +1,12 @@
 import {
   Checkbox,
+  Collapse,
   FormControl,
   FormHelperText,
   FormLabel,
   Heading,
+  HStack,
   Input,
-  Link,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -14,9 +15,11 @@ import {
   ModalHeader,
   ModalOverlay,
   ModalProps,
+  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { ChangeEvent, useCallback } from "react";
+import { CaretDown } from "phosphor-react";
+import { ChangeEvent, useCallback, useEffect } from "react";
 import { useImmer } from "use-immer";
 import { PrimaryButton } from "../../../../components/Buttons/Primary";
 import { useDockerComposeProject } from "../../../providers/DockerComposeProvider";
@@ -25,23 +28,33 @@ import { DriverEditor } from "./DriverEditor";
 import { IpamEditor } from "./IpamEditor";
 import { NetworkVisibilityEditor } from "./VisibilityEditor";
 
-export function NetworkEditor(props: Omit<ModalProps, "children">) {
-  const [content, setContent] = useImmer<NetworkConfig>({
-    label: "",
-    internal: true,
-    driver: "bridge",
-    driver_opts: {},
-  });
+interface Props {
+  value?: NetworkConfig;
+  onChange: (config: NetworkConfig) => any;
+}
 
-  const { state: projectState } = useDockerComposeProject();
+export function NetworkEditor(props: Props) {
+  const [content, setContent] = useImmer<NetworkConfig>(
+    props.value || {
+      label: "",
+      internal: true,
+      external: false,
+      driver: "bridge",
+      driver_opts: {},
+    }
+  );
+
+  useEffect(() => {
+    props.onChange(content);
+  }, [content]);
+
+  const advancedOptions = useDisclosure();
 
   const onLabelChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     let label = ev.currentTarget.value;
-    if (label) {
-      setContent((draft) => {
-        draft.label = label;
-      });
-    }
+    setContent((draft) => {
+      draft.label = label;
+    });
   }, []);
 
   const onNameChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
@@ -77,84 +90,72 @@ export function NetworkEditor(props: Omit<ModalProps, "children">) {
     });
   }, []);
 
-  const onSubmit = useCallback(() => {
-    if (props.onClose) {
-      props.onClose();
-    }
-  }, [content.label, props.onClose]);
-
   return (
-    <Modal
-      size="xl"
-      isCentered
-      closeOnOverlayClick={false}
-      closeOnEsc={false}
-      scrollBehavior="inside"
-      {...props}
-    >
-      <ModalOverlay />
-      <ModalContent bg="surface">
-        <ModalHeader>
-          <Heading fontSize="lg">Add a network</Heading>
-          <ModalCloseButton />
-        </ModalHeader>
-        <ModalBody>
-          <VStack alignItems="flex-start" spacing={4}>
-            <FormControl>
-              <FormLabel>Code</FormLabel>
-              <Input
-                value={content.label}
-                fontSize="md"
-                onChange={onLabelChange}
-                variant="outline"
-                placeholder="Enter a nice eye-catching name"
-              />
-              <FormHelperText>
-                Avoid using spaces. Instead use "-" or "_"
-              </FormHelperText>
-            </FormControl>
-            <FormControl>
-              <FormLabel>Network name</FormLabel>
-              <Input
-                value={content.name}
-                fontSize="md"
-                onChange={onNameChange}
-                variant="outline"
-                placeholder="Enter a nice eye-catching name"
-              />
-              <FormHelperText>
-                Avoid using spaces. Instead use "-" or "_"
-              </FormHelperText>
-            </FormControl>
-            <NetworkVisibilityEditor
-              onSwitch={onExternalChange}
-              external={content.external}
-            />
-            <FormControl>
-              <Checkbox
-                isChecked={content.enable_ipv6}
-                colorScheme="primary"
-                onChange={(ev) => {
-                  setContent((draft) => {
-                    draft.enable_ipv6 = ev.currentTarget.checked;
-                  });
-                }}
-              >
-                Enable IPv6
-              </Checkbox>
-            </FormControl>
-            <DriverEditor
-              type={content.driver}
-              options={content.driver_opts}
-              onChange={onDriverChange}
-            />
-            <IpamEditor config={content.ipam} onChange={onIpamChange} />
-          </VStack>
-        </ModalBody>
-        <ModalFooter>
-          <PrimaryButton onClick={onSubmit}>Add this network</PrimaryButton>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+    <VStack alignItems="flex-start" spacing={4}>
+      <FormControl isRequired>
+        <FormLabel>Label</FormLabel>
+        <Input
+          value={content.label}
+          fontSize="md"
+          onChange={onLabelChange}
+          variant="outline"
+          placeholder="Enter a nice eye-catching name"
+        />
+        <FormHelperText>
+          Avoid using spaces. Instead use "-" or "_"
+        </FormHelperText>
+      </FormControl>
+      <HStack
+        cursor="pointer"
+        w="full"
+        alignItems="center"
+        justifyContent="space-between"
+        onClick={() => advancedOptions.onOpen()}
+      >
+        <Heading fontSize="md">Advanced Options</Heading>
+      </HStack>
+      <VStack alignItems="flex-start" p={4} spacing={2}>
+        <NetworkVisibilityEditor
+          onSwitch={onExternalChange}
+          external={content.external}
+        />
+        <FormControl>
+          <FormLabel>Custom name</FormLabel>
+          <Input
+            value={content.name}
+            fontSize="md"
+            onChange={onNameChange}
+            variant="outline"
+            placeholder="A custom name for your network"
+          />
+          <FormHelperText>
+            Avoid using spaces. Instead use "-" or "_"
+          </FormHelperText>
+          <FormHelperText>
+            While the label will be used in the generated compose file, the name
+            is the custom name you give to this network. It is unscoped.
+          </FormHelperText>
+        </FormControl>
+        <FormControl>
+          <Checkbox
+            isChecked={content.enable_ipv6}
+            colorScheme="primary"
+            onChange={(ev) => {
+              setContent((draft) => {
+                draft.enable_ipv6 = ev.currentTarget.checked;
+              });
+            }}
+          >
+            Enable IPv6
+          </Checkbox>
+        </FormControl>
+        <DriverEditor
+          type={content.driver}
+          options={content.driver_opts}
+          onChange={onDriverChange}
+        />
+        <IpamEditor config={content.ipam} onChange={onIpamChange} />
+      </VStack>
+    </VStack>
   );
 }
