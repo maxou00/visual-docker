@@ -11,24 +11,22 @@ export const initialState: IDockerComposeState = {
 
 export function stateReducer(draft: Draft<IDockerComposeState>, action: any) {
 
-    switch (action.type) {
-        case "SET_PROJECT_NAME":
-            draft.project.name = action.payload;
-            break;
-        case "ADD_NETWORK":
-            let net = action.payload as NetworkConfig;
-            let collision = draft.networks.findIndex((n) => n.label === net.label);
-            if(collision > -1) {
-                return;
-            }
-            else {
-                let cpy = [...draft.networks];
-                cpy.push(net);
-                draft.networks = cpy;
-            }
-            break;
-        default:
-            break;
+    if(action.type === "SET_PROJECT_NAME") {
+        draft.project.name = action.payload;
+    }
+    else if(action.type === "PUT_NETWORK") {
+        let net = action.payload as NetworkConfig;
+        let collisionIndex = draft.networks.findIndex((n) => n.label === net.label);
+        if (collisionIndex > -1) {
+            let cpy = [...draft.networks];
+            cpy[collisionIndex] = net;
+            draft.networks = cpy;
+        }
+        else {
+            let cpy = [...draft.networks];
+            cpy.push(net);
+            draft.networks = cpy;
+        }
     }
 
 }

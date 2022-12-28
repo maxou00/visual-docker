@@ -35,7 +35,7 @@ export function DockerComposeProvider(props: PropsWithChildren<{}>) {
   }, []);
 
   const addNetwork = useCallback((conf: NetworkConfig) => {
-    dispatch({ type: "ADD_NETWORK", payload: conf });
+    dispatch({ type: "PUT_NETWORK", payload: conf });
   }, []);
 
   return (

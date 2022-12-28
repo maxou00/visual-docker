@@ -7,14 +7,18 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { Pen } from "phosphor-react";
+import { useState } from "react";
 import { PrimaryButton } from "../../../components/Buttons/Primary";
 import { useDockerComposeProject } from "../../providers/DockerComposeProvider";
 import { NetworkEditor } from "./NetworkEditor";
-import { CreateNetworkModal } from "./NetworkEditor/modal";
+import { CreateNetworkModal, UpdateNetworkModal } from "./NetworkEditor/modal";
 
 export function ProjectNetworks() {
   const addNetworkModal = useDisclosure();
+  const editNetworkModal = useDisclosure();
   const { state: composer } = useDockerComposeProject();
+
+  const [netIndex, setNetIndex] = useState(-1);
 
   return (
     <VStack w="full" alignItems="flex-start" spacing={4}>
@@ -26,7 +30,7 @@ export function ProjectNetworks() {
       <Link href="https://docs.docker.com/network/">Read more</Link>
 
       <VStack w="full" spacing={2} alignItems="flex-start">
-        {composer.networks.map((net) => {
+        {composer.networks.map((net, i) => {
           return (
             <HStack
               bg="surface"
@@ -41,8 +45,11 @@ export function ProjectNetworks() {
               <Text fontFamily="heading">{net.label}</Text>
               <PrimaryButton
                 rounded="md"
-                onClick={() => addNetworkModal.onOpen()}
-                leftIcon={<Pen weight="fill" size={16}/>}
+                onClick={() => {
+                  setNetIndex(i);
+                  editNetworkModal.onOpen();
+                }}
+                leftIcon={<Pen weight="fill" size={16} />}
               >
                 Change
               </PrimaryButton>
@@ -57,6 +64,16 @@ export function ProjectNetworks() {
           : "Add another network"}
       </PrimaryButton>
       <CreateNetworkModal {...addNetworkModal} />
+      {netIndex > -1 && (
+        <UpdateNetworkModal
+          value={composer.networks[netIndex]}
+          {...editNetworkModal}
+          onClose={() => {
+            setNetIndex(-1);
+            editNetworkModal.onClose();
+          }}
+        />
+      )}
     </VStack>
   );
 }
