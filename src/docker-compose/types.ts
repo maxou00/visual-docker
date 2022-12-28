@@ -1,0 +1,21 @@
+export interface IPAMConfig {
+    driver: "default";
+    config: {
+        subnet: string;
+        ip_range: string;
+        gateway: string;
+        aux_addresses: { [key: string]: string }
+    }
+    options: any;
+}
+
+export interface NetworkConfig {
+    label: string;
+    driver?: "bridge" | "host" | "overlay" | "ipvlan" | "macvlan" | "none";
+    driver_opts?: any;
+    enable_ipv6?: boolean;
+    external?: boolean;
+    internal?: boolean;
+    name?: string;
+    ipam?: IPAMConfig;
+}

@@ -1,0 +1,83 @@
+$container: 1280px;
+
+:root {
+  --colors-background: #181818;
+  --colors-surface: #000000;
+  --colors-on-background: #f9f9f9;
+  --colors-on-surface: #f9f9f9;
+
+  --colors-divider-on-background: #f9f9f940;
+  --colors-divider-on-surface: #f9f9f940;
+
+  --colors-primary: #ff4a17;
+  --colors-on-primary: #fafafa;
+
+  --fonts-heading: "Poppins", sans-serif;
+  --fonts-body: "Open Sans", sans-serif;
+
+  --size-container-max-width: #{$container};
+  --size-min-appbar-height: 128px;
+
+  --easing-bezier: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  width: 100vw;
+  height: 100%;
+  overflow-x: hidden;
+  background-color: transparent;
+}
+
+body {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  background-color: var(--colors-background);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--fonts-heading);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.app {
+  width: 100%;
+  min-height: 100%;
+  background: var(--colors-background);
+  color: var(--colors-on-background);
+  font-family: var(--fonts-body);
+}
+
+.trait {
+  width: 24px;
+  height: 2px;
+  background: var(--colors-on-surface);
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+@media screen and (max-width: #{$container}) {
+  :root {
+    --size-container-max-width: calc(100vw - 24px);
+  }
+}
+
+
+*:focus {
+  box-shadow: none !important;
+}
