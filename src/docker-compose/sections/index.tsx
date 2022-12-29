@@ -16,6 +16,7 @@ import { ProjectConfigFiles } from "./configs";
 import { ProjectNetworks } from "./networks";
 import { ProjectNameEditor } from "./ProjectName";
 import { ProjectSecrets } from "./secrets";
+import { ProjectServices } from "./services";
 import { ProjectVolumes } from "./volumes";
 
 export function DockerComposeProject() {
@@ -32,9 +33,9 @@ export function DockerComposeProject() {
   }, [project.name]);
 
   return (
-    <VStack bg="background" w="full" minH="100vh" alignItems="flex-start">
-      <VStack alignItems="flex-start" w="25vw" p={2}>
-        <HStack alignItems="center" p={2}>
+    <HStack bg="background" w="full" h="100vh" alignItems="flex-start">
+      <VStack h="full" overflowY="auto" alignItems="flex-start" w="30%" p={2}>
+        <HStack h="56px" alignItems="center">
           <Heading fontSize="xl">
             {project.name || "Setup your project's name"}
           </Heading>
@@ -50,6 +51,7 @@ export function DockerComposeProject() {
           <ProjectSecrets />
         </VStack>
       </VStack>
-    </VStack>
+      <ProjectServices />
+    </HStack>
   );
 }
