@@ -13,22 +13,22 @@ import {
 } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { useImmer } from "use-immer";
-import { VolumeEditor } from ".";
+import { SecretEditor } from ".";
 import { PrimaryButton } from "../../../../components/Buttons/Primary";
 import { useDockerComposeProject } from "../../../providers/DockerComposeProvider";
-import { VolumeConfig } from "../../../types";
+import { SecretConfig } from "../../../types";
 
-export function CreateVolumeModal(props: Omit<ModalProps, "children">) {
-  const [content, setContent] = useImmer<{ item: VolumeConfig }>({
+export function CreateSecretModal(props: Omit<ModalProps, "children">) {
+  const [content, setContent] = useImmer<{ item: SecretConfig }>({
     item: {
       label: "",
     },
   });
 
-  const { addVolume } = useDockerComposeProject();
+  const { addSecret } = useDockerComposeProject();
 
   const onSubmit = useCallback(() => {
-    addVolume(content.item);
+    addSecret(content.item);
     if (props.onClose) {
       props.onClose();
     }
@@ -47,12 +47,12 @@ export function CreateVolumeModal(props: Omit<ModalProps, "children">) {
       <DrawerOverlay />
       <DrawerContent bg="surface">
         <DrawerHeader>
-          <Heading fontSize="lg">Add a volume</Heading>
+          <Heading fontSize="lg">Add a secret</Heading>
           <ModalCloseButton />
         </DrawerHeader>
         <DrawerBody>
           <VStack alignItems="flex-start" spacing={4}>
-            <VolumeEditor
+            <SecretEditor
               value={content.item}
               onChange={(update) => {
                 setContent((draft) => {
@@ -63,26 +63,26 @@ export function CreateVolumeModal(props: Omit<ModalProps, "children">) {
           </VStack>
         </DrawerBody>
         <DrawerFooter>
-          <PrimaryButton onClick={onSubmit}>Add this volume</PrimaryButton>
+          <PrimaryButton onClick={onSubmit}>Add this secret</PrimaryButton>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
   );
 }
 
-export function UpdateVolumeModal(
-  props: Omit<ModalProps, "children"> & { value: VolumeConfig }
+export function UpdateSecretModal(
+  props: Omit<ModalProps, "children"> & { value: SecretConfig }
 ) {
-  const [content, setContent] = useImmer<{ item: VolumeConfig }>({
+  const [content, setContent] = useImmer<{ item: SecretConfig }>({
     item: {
       ...props.value,
     },
   });
 
-  const { addVolume } = useDockerComposeProject();
+  const { addSecret } = useDockerComposeProject();
 
   const onSubmit = useCallback(() => {
-    addVolume(content.item);
+    addSecret(content.item);
     if (props.onClose) {
       props.onClose();
     }
@@ -102,12 +102,12 @@ export function UpdateVolumeModal(
       <DrawerOverlay />
       <DrawerContent bg="surface">
         <DrawerHeader>
-          <Heading fontSize="lg">Update volume {props.value.label}</Heading>
+          <Heading fontSize="lg">Update secret {props.value.label}</Heading>
           <DrawerCloseButton />
         </DrawerHeader>
         <DrawerBody>
           <VStack alignItems="flex-start" spacing={4}>
-            <VolumeEditor
+            <SecretEditor
               value={content.item}
               onChange={(update) => {
                 setContent((draft) => {

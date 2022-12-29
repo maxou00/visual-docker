@@ -13,22 +13,22 @@ import {
 } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { useImmer } from "use-immer";
-import { VolumeEditor } from ".";
+import { ConfigEditor } from ".";
 import { PrimaryButton } from "../../../../components/Buttons/Primary";
 import { useDockerComposeProject } from "../../../providers/DockerComposeProvider";
-import { VolumeConfig } from "../../../types";
+import { ConfigFile, VolumeConfig } from "../../../types";
 
-export function CreateVolumeModal(props: Omit<ModalProps, "children">) {
-  const [content, setContent] = useImmer<{ item: VolumeConfig }>({
+export function CreateConfigModal(props: Omit<ModalProps, "children">) {
+  const [content, setContent] = useImmer<{ item: ConfigFile }>({
     item: {
       label: "",
     },
   });
 
-  const { addVolume } = useDockerComposeProject();
+  const { addConfigFile } = useDockerComposeProject();
 
   const onSubmit = useCallback(() => {
-    addVolume(content.item);
+    addConfigFile(content.item);
     if (props.onClose) {
       props.onClose();
     }
@@ -47,12 +47,12 @@ export function CreateVolumeModal(props: Omit<ModalProps, "children">) {
       <DrawerOverlay />
       <DrawerContent bg="surface">
         <DrawerHeader>
-          <Heading fontSize="lg">Add a volume</Heading>
+          <Heading fontSize="lg">Add a config</Heading>
           <ModalCloseButton />
         </DrawerHeader>
         <DrawerBody>
           <VStack alignItems="flex-start" spacing={4}>
-            <VolumeEditor
+            <ConfigEditor
               value={content.item}
               onChange={(update) => {
                 setContent((draft) => {
@@ -63,26 +63,26 @@ export function CreateVolumeModal(props: Omit<ModalProps, "children">) {
           </VStack>
         </DrawerBody>
         <DrawerFooter>
-          <PrimaryButton onClick={onSubmit}>Add this volume</PrimaryButton>
+          <PrimaryButton onClick={onSubmit}>Add this config file</PrimaryButton>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
   );
 }
 
-export function UpdateVolumeModal(
-  props: Omit<ModalProps, "children"> & { value: VolumeConfig }
+export function UpdateConfigModal(
+  props: Omit<ModalProps, "children"> & { value: ConfigFile }
 ) {
-  const [content, setContent] = useImmer<{ item: VolumeConfig }>({
+  const [content, setContent] = useImmer<{ item: ConfigFile }>({
     item: {
       ...props.value,
     },
   });
 
-  const { addVolume } = useDockerComposeProject();
+  const { addConfigFile } = useDockerComposeProject();
 
   const onSubmit = useCallback(() => {
-    addVolume(content.item);
+    addConfigFile(content.item);
     if (props.onClose) {
       props.onClose();
     }
@@ -102,12 +102,12 @@ export function UpdateVolumeModal(
       <DrawerOverlay />
       <DrawerContent bg="surface">
         <DrawerHeader>
-          <Heading fontSize="lg">Update volume {props.value.label}</Heading>
+          <Heading fontSize="lg">Update config {props.value.label}</Heading>
           <DrawerCloseButton />
         </DrawerHeader>
         <DrawerBody>
           <VStack alignItems="flex-start" spacing={4}>
-            <VolumeEditor
+            <ConfigEditor
               value={content.item}
               onChange={(update) => {
                 setContent((draft) => {

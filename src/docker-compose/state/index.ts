@@ -1,4 +1,4 @@
-import { NetworkConfig, VolumeConfig } from "../types";
+import { ConfigFile, NetworkConfig, SecretConfig, VolumeConfig } from "../types";
 
 export interface IDockerComposeState {
     project: {
@@ -6,4 +6,6 @@ export interface IDockerComposeState {
     },
     networks: NetworkConfig[];
     volumes: VolumeConfig[];
+    configs: ConfigFile[];
+    secrets: SecretConfig[];
 }

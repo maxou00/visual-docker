@@ -24,10 +24,25 @@ export interface NetworkConfig {
 export interface VolumeConfig {
     label: string;
     name?: string;
-    external?: {
+    external?: boolean | {
         name: string;
     };
-    type?: any;
+    driver?: any;
     driver_opts?: any;
     labels?: any;
+}
+
+export interface ConfigFile {
+    label: string;
+    name?: string;
+    external?: boolean;
+    file?: string;
+}
+
+export interface SecretConfig {
+    label: string;
+    name?: string;
+    external?: boolean;
+    environment?: string;
+    file?: string;
 }

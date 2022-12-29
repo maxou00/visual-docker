@@ -20,7 +20,7 @@ export function ProjectVolumes() {
 
   return (
     <VStack bg="surface" w="full" alignItems="flex-start" spacing={4} p={4} rounded="md">
-      <Heading fontSize="lg">Your Volumes are here.</Heading>
+      <Heading fontSize="lg">Volumes</Heading>
       <Text maxW="54ch" fontSize="sm" opacity={0.55}>
         Volumes bring data storage capability within your environment, allowing
         you to persist information across containers restarts.

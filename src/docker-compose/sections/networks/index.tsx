@@ -21,7 +21,7 @@ export function ProjectNetworks() {
 
   return (
     <VStack bg="surface" w="full" alignItems="flex-start" spacing={4} p={4} rounded="md">
-      <Heading fontSize="lg">Your networks are here.</Heading>
+      <Heading fontSize="lg">Networks</Heading>
       <Text maxW="54ch" fontSize="sm" opacity={0.55}>
         Networks bring exchange capability within your environment, helping you
         to tie services and containers up.

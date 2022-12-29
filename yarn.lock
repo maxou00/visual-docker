@@ -1383,7 +1383,7 @@ hoist-non-react-statics@^3.3.1:
   dependencies:
     react-is "^16.7.0"
 
-immer@^9.0.16:
+immer@^9.0.15, immer@^9.0.16:
   version "9.0.16"
   resolved "https://registry.yarnpkg.com/immer/-/immer-9.0.16.tgz#8e7caab80118c2b54b37ad43e05758cdefad0198"
   integrity sha512-qenGE7CstVm1NrHQbMh8YaSzTZTFNP3zPqr3YU0S0UY441j4bJTg4A2Hh5KAhwgaiU6ZZ1Ar6y/2f4TblnMReQ==
@@ -1470,6 +1470,22 @@ loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
   integrity sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
+
+muxjs-core@^1.0.18:
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/muxjs-core/-/muxjs-core-1.0.18.tgz#8bd356edbbcbecbb0a04a22e59abe8726e052b1e"
+  integrity sha512-g0f8R30LpzdJDMpynZvCpRbz2RnSpFc2efSONp0sntYD1X2XHdwDmq8yNg+okMiZyM3271t8Y+Ug4WN++napOg==
+  dependencies:
+    immer "^9.0.15"
+
+muxjs-react@^1.0.16:
+  version "1.0.16"
+  resolved "https://registry.yarnpkg.com/muxjs-react/-/muxjs-react-1.0.16.tgz#726ca54574cdfcea58976afdd861ad732ea125d0"
+  integrity sha512-XbgKDASAtcNmF4yiQT3eQbYy+mIAENAdHoTpDnkkG+NELF0HM6zkhKxVQOoYTYBYiCaK8PM2YLbonk+/0w4u5A==
+  dependencies:
+    muxjs-core "^1.0.18"
+    react "^18.2.0"
+    react-dom "^18.2.0"
 
 nanoid@^3.3.4:
   version "3.3.4"
@@ -1578,7 +1594,7 @@ react-clientside-effect@^1.2.6:
   dependencies:
     "@babel/runtime" "^7.12.13"
 
-react-dom@18.2.0:
+react-dom@18.2.0, react-dom@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.2.0.tgz#22aaf38708db2674ed9ada224ca4aa708d821e3d"
   integrity sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==
@@ -1643,7 +1659,7 @@ react-style-singleton@^2.2.1:
     invariant "^2.2.4"
     tslib "^2.0.0"
 
-react@18.2.0:
+react@18.2.0, react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==

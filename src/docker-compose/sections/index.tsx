@@ -12,8 +12,10 @@ import {
   DockerComposeProvider,
   useDockerComposeProject,
 } from "../providers/DockerComposeProvider";
+import { ProjectConfigFiles } from "./configs";
 import { ProjectNetworks } from "./networks";
 import { ProjectNameEditor } from "./ProjectName";
+import { ProjectSecrets } from "./secrets";
 import { ProjectVolumes } from "./volumes";
 
 export function DockerComposeProject() {
@@ -31,7 +33,7 @@ export function DockerComposeProject() {
 
   return (
     <VStack bg="background" w="full" minH="100vh" alignItems="flex-start">
-      <VStack alignItems="flex-start" w="30%" p={2}>
+      <VStack alignItems="flex-start" w="25vw" p={2}>
         <HStack alignItems="center" p={2}>
           <Heading fontSize="xl">
             {project.name || "Setup your project's name"}
@@ -44,6 +46,8 @@ export function DockerComposeProject() {
           <ProjectNameEditor {...editProjectModal} />
           <ProjectNetworks />
           <ProjectVolumes />
+          <ProjectConfigFiles />
+          <ProjectSecrets />
         </VStack>
       </VStack>
     </VStack>
