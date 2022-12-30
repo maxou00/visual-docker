@@ -46,3 +46,72 @@ export interface SecretConfig {
     environment?: string;
     file?: string;
 }
+
+
+interface WeightDevice {
+    path: string;
+    weight: number;
+}
+
+interface DeviceRate {
+    path: string;
+    rate: number | string;
+}
+
+interface DeviceIops {
+    path: string;
+    rate: number;
+}
+
+interface BlockIoConfig {
+    weight: number;
+    weight_device: WeightDevice[];
+
+    device_read_bps: DeviceRate[];
+    device_write_bps: DeviceRate[];
+
+    device_read_iops: DeviceRate[];
+    device_write_iops: DeviceRate[];
+}
+
+interface CpuConfig {
+    cpu_count?: number;
+    cpu_percent?: number;
+    cpu_shares?: number;
+    cpu_period?: number;
+    cpu_quota?: number;
+    cpu_rt_runtime?: number;
+    cpu_rt_period?: number;
+    cpu_set?: string;
+}
+
+interface BindConfigToService {
+    source: string;
+    target?: string;
+    uid?: string;
+    gid?: string;
+    mode?: string;
+}
+
+interface ServiceDependency {
+    label: string;
+    condition?: "service_started" | "service_healthy" | "service_completed_successfully"
+}
+
+interface DeviceMapping {
+    from: string;
+    to: string;
+    permissions: string;
+}
+
+export interface ServiceConfig extends CpuConfig {
+    id: string;
+    label: string;
+    image?: string;
+    container_name?: string;
+    blkio_config?: BlockIoConfig;
+    command?: string;
+    configs?: BindConfigToService[];
+    depends_on?: ServiceDependency[];
+    devices?: DeviceMapping;
+}

@@ -34,7 +34,7 @@ export function DockerComposeProject() {
 
   return (
     <HStack bg="background" w="full" h="100vh" alignItems="flex-start">
-      <VStack h="full" overflowY="auto" alignItems="flex-start" w="30%" p={2}>
+      <VStack h="full" overflowY="auto" alignItems="flex-start" w="40%" p={2}>
         <HStack h="56px" alignItems="center">
           <Heading fontSize="xl">
             {project.name || "Setup your project's name"}
@@ -51,7 +51,15 @@ export function DockerComposeProject() {
           <ProjectSecrets />
         </VStack>
       </VStack>
-      <ProjectServices />
+      <VStack
+        bg="background"
+        w="full"
+        h="100vh"
+        overflowY="auto"
+        alignItems="flex-start"
+      >
+        <ProjectServices />
+      </VStack>
     </HStack>
   );
 }
