@@ -4,7 +4,8 @@ import { ConfigFile, NetworkConfig, SecretConfig, VolumeConfig } from "../types"
 
 export const initialState: IDockerComposeState = {
     project: {
-        name: ""
+        name: "",
+        version: "3.9"
     },
     networks: [],
     volumes: [],
