@@ -119,7 +119,7 @@ export default function WeightDeviceInput({
           />
         );
       })}
-      <HStack w="full" justifyContent="flex-start">
+      <HStack w="full" justifyContent="flex-end">
         <PrimaryButton variant="ghost" size="sm" onClick={onAppendKey}>
           Add a path entry
         </PrimaryButton>

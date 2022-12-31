@@ -17,6 +17,7 @@ import { useImmer } from "use-immer";
 import { PrimaryButton } from "../../../../components/Buttons/Primary";
 import { ServiceConfig } from "../../../types";
 import { BlockIoEditor } from "./BlockIoConfigEditor";
+import BoundConfigEditor from "./BoundConfigEditor";
 import { CpuConfigEditor } from "./CpuConfigEditor";
 
 interface Props {
@@ -108,6 +109,14 @@ export function ServiceEditor(props: Props) {
           />
           <FormHelperText>Override the default command</FormHelperText>
         </FormControl>
+        <BoundConfigEditor
+          value={service.configs}
+          onChange={(cnf) => {
+            setService((draft) => {
+              draft.configs = cnf;
+            });
+          }}
+        />
         <CpuConfigEditor
           value={service}
           onChange={(cnf) => {
@@ -132,8 +141,12 @@ export function ServiceEditor(props: Props) {
           }}
         />
       </VStack>
-      <HStack p={4} w="full" alignItems="center" justifyContent="flex-end">
-        <PrimaryButton size="md" onClick={onApplyChanges}>
+      <HStack p={4} w="full" alignItems="center" justifyContent="center">
+        <PrimaryButton
+          rightIcon={<Check size={24} />}
+          size="md"
+          onClick={onApplyChanges}
+        >
           Apply changes
         </PrimaryButton>
       </HStack>

@@ -119,7 +119,7 @@ export function BlockIoEditor(props: Props) {
         />
       </FormControl>
       <FormControl>
-        <FormLabel>Device Read Io/s (Input )</FormLabel>
+        <FormLabel>Device Read IO/s</FormLabel>
         <FormHelperText mb={2}>
           Fine-tune the number of read operations per second on the device. You
           need to specify for each device a path and the rate allocation
@@ -135,7 +135,7 @@ export function BlockIoEditor(props: Props) {
         />
       </FormControl>
       <FormControl>
-        <FormLabel>Device Write Io/s </FormLabel>
+        <FormLabel>Device Write IO/s </FormLabel>
         <FormHelperText mb={2}>
           Fine-tune the number of write operations per second on the device. You
           need to specify for each device a path and the rate allocation

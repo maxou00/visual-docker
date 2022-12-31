@@ -88,7 +88,8 @@ export interface CpuConfig {
     cpuset?: string;
 }
 
-interface BindConfigToService {
+export interface BindConfigToService {
+    id?: string;
     source: string;
     target?: string;
     uid?: string;
