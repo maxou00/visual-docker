@@ -7,6 +7,7 @@ import {
   HStack,
   IconButton,
   Input,
+  Link,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -57,7 +58,7 @@ export function ServiceEditor(props: Props) {
               });
             }}
             onKeyDown={(ev) => {
-              if(ev.code.toLowerCase() === "enter") {
+              if (ev.code.toLowerCase() === "enter") {
                 onApplyChanges();
               }
             }}
@@ -65,10 +66,11 @@ export function ServiceEditor(props: Props) {
         )}
         <IconButton
           aria-label="apply"
-          size="md"
+          rounded="full"
+          size="sm"
           onClick={editLabel ? onApplyChanges : () => setEditLabel(true)}
         >
-          {editLabel ? <Check size={20} /> : <Pen weight="fill" size={20} />}
+          {editLabel ? <Check size={16} /> : <Pen weight="fill" size={16} />}
         </IconButton>
       </HStack>
       <Divider />
@@ -87,14 +89,25 @@ export function ServiceEditor(props: Props) {
             placeholder=""
           />
         </FormControl>
-        <BlockIoEditor
-          value={service.blkio_config}
-          onChange={(cnf) => {
-            setService((draft) => {
-              draft.blkio_config = cnf;
-            });
-          }}
-        />
+        <FormControl>
+          <FormLabel>
+            <Link href="https://docs.docker.com/compose/compose-file/#command">
+              Command
+            </Link>
+          </FormLabel>
+          <Input
+            size="sm"
+            value={service.command}
+            onChange={(ev) => {
+              setService((draft) => {
+                draft.command = ev.target.value;
+              });
+            }}
+            variant="outline"
+            placeholder=""
+          />
+          <FormHelperText>Override the default command</FormHelperText>
+        </FormControl>
         <CpuConfigEditor
           value={service}
           onChange={(cnf) => {
@@ -107,6 +120,14 @@ export function ServiceEditor(props: Props) {
               draft.cpu_rt_runtime = cnf.cpu_rt_runtime;
               draft.cpuset = cnf.cpuset;
               draft.cpu_shares = cnf.cpu_shares;
+            });
+          }}
+        />
+        <BlockIoEditor
+          value={service.blkio_config}
+          onChange={(cnf) => {
+            setService((draft) => {
+              draft.blkio_config = cnf;
             });
           }}
         />
