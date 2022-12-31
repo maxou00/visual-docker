@@ -2,6 +2,7 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
+  Heading,
   Input,
   Text,
   VStack,
@@ -39,14 +40,18 @@ export function ServiceEditor(props: Props) {
 
   return (
     <VStack w="full" alignItems="flex-start" spacing={4}>
-      <Text fontWeight="bold" contentEditable onInput={(ev) => {}}>
+      <Heading fontSize="lg" fontWeight="bold" contentEditable onInput={(ev) => {
+        setService(draft => {
+          draft.label = (ev.target as HTMLHeadingElement).textContent || "";
+        });
+      }}>
         Set your service name here
-      </Text>
+      </Heading>
       <FormControl isRequired>
         <FormLabel>Image name</FormLabel>
         <Input
           value={service.image}
-          fontSize="md"
+          size="sm"
           onChange={onImageChange}
           variant="outline"
           placeholder=""

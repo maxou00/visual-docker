@@ -48,22 +48,25 @@ export interface SecretConfig {
 }
 
 
-interface WeightDevice {
+export interface WeightDevice {
+    id?: string;
     path: string;
     weight: number;
 }
 
-interface DeviceRate {
+export interface DeviceRate {
+    id?: string;
     path: string;
     rate: number | string;
 }
 
-interface DeviceIops {
+export interface DeviceIops {
+    id?: string;
     path: string;
     rate: number;
 }
 
-interface BlockIoConfig {
+export interface BlockIoConfig {
     weight: number;
     weight_device: WeightDevice[];
 
