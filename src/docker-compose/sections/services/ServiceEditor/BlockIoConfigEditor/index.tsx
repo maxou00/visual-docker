@@ -7,14 +7,19 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useImmer } from "use-immer";
 import { BlockIoConfig } from "../../../../types";
 import DeviceReadOrWriteBpsInput from "./DeviceReadOrWriteBpsEditor";
 import DeviceReadOrWriteIopsInput from "./DeviceReadOrWriteIopsEditor";
 import WeightDeviceInput from "./WeightDeviceEditor";
 
-export function BlockIoEditor() {
+interface Props {
+  value?: BlockIoConfig;
+  onChange: (config:BlockIoConfig) => any;
+}
+
+export function BlockIoEditor(props: Props) {
   const [content, update] = useImmer<BlockIoConfig>({
     weight: 500,
     weight_device: [],
@@ -22,9 +27,18 @@ export function BlockIoEditor() {
     device_write_bps: [],
     device_read_iops: [],
     device_write_iops: [],
+    ...props.value
   });
 
-  const onWeightChange = useCallback((weight: string) => {}, []);
+  const onWeightChange = useCallback((weight: number) => {
+    update(draft => {
+      draft.weight = weight;
+    })
+  }, []);
+
+  useEffect(() => {
+    props.onChange(content);
+  }, [content]);
 
   return (
     <VStack w="full" alignItems="flex-start" spacing={4}>
@@ -46,7 +60,7 @@ export function BlockIoEditor() {
           fontSize="md"
           type="number"
           onChange={(ev) => {
-            onWeightChange(ev.currentTarget.value);
+            onWeightChange(ev.currentTarget.valueAsNumber);
           }}
           variant="outline"
           placeholder=""

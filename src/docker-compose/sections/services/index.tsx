@@ -48,7 +48,7 @@ export function ProjectServices() {
 
   return (
     <HStack w="full" h="full" overflow="hidden" alignItems="flex-start">
-      <Box w="320px" h="full" overflowY="auto">
+      <Box w="360px" h="full" overflowY="auto">
         <HStack h="56px" w="full" alignItems="center" px={2}>
           <Heading fontSize="xl">Services</Heading>
         </HStack>
@@ -92,7 +92,7 @@ export function ProjectServices() {
         )}
       </Box>
       <Box h="full" overflow="hidden" bg="surface" flexGrow={1}>
-        <Box w="full" h="full" overflowY="auto" p={4}>
+        <Box w="full" h="full" overflowY="auto">
           {selectedService && (
             <ServiceEditor
               value={selectedService}

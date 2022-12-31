@@ -77,15 +77,15 @@ export interface BlockIoConfig {
     device_write_iops: DeviceRate[];
 }
 
-interface CpuConfig {
+export interface CpuConfig {
     cpu_count?: number;
     cpu_percent?: number;
     cpu_shares?: number;
     cpu_period?: number;
     cpu_quota?: number;
-    cpu_rt_runtime?: number;
-    cpu_rt_period?: number;
-    cpu_set?: string;
+    cpu_rt_runtime?: number | string;
+    cpu_rt_period?: number | string;
+    cpuset?: string;
 }
 
 interface BindConfigToService {

@@ -67,7 +67,7 @@ export default function WeightDeviceInput({
   value: any;
   onChange: (v: any) => any;
 }) {
-  const [keys, setKeys] = useState<Entry[]>([initial]);
+  const [keys, setKeys] = useState<Entry[]>([]);
 
   const onAppendKey = useCallback(() => {
     let cpy = [...keys];
