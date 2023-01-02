@@ -78,7 +78,7 @@ const FieldEntry = ({
             placeholder=""
             value={entry.mode}
             onChange={({ target }) =>
-              onChange({ ...entry, target: target.value })
+              onChange({ ...entry, mode: target.value })
             }
           />
           <FormHelperText>

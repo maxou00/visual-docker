@@ -83,7 +83,7 @@ export function ServiceEditor(props: Props) {
             size="sm"
             onChange={(ev) => {
               setService((draft) => {
-                draft.image = ev.currentTarget.value;
+                draft.image = ev.target.value;
               });
             }}
             variant="outline"
