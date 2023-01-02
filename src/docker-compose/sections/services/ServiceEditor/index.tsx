@@ -18,6 +18,8 @@ import { PrimaryButton } from "../../../../components/Buttons/Primary";
 import { ServiceConfig } from "../../../types";
 import { BlockIoEditor } from "./BlockIoConfigEditor";
 import BoundConfigEditor from "./BoundConfigEditor";
+import BoundSecretConfigEditor from "./BoundSecretEditor";
+import BoundVolumeConfigEditor from "./BoundVolumeEditor";
 import { CpuConfigEditor } from "./CpuConfigEditor";
 
 interface Props {
@@ -90,6 +92,30 @@ export function ServiceEditor(props: Props) {
             placeholder=""
           />
         </FormControl>
+        <BoundVolumeConfigEditor
+          value={service.configs}
+          onChange={(cnf) => {
+            setService((draft) => {
+              draft.configs = cnf;
+            });
+          }}
+        />
+        <BoundConfigEditor
+          value={service.configs}
+          onChange={(cnf) => {
+            setService((draft) => {
+              draft.configs = cnf;
+            });
+          }}
+        />
+        <BoundSecretConfigEditor
+          value={service.configs}
+          onChange={(cnf) => {
+            setService((draft) => {
+              draft.configs = cnf;
+            });
+          }}
+        />
         <FormControl>
           <FormLabel>
             <Link href="https://docs.docker.com/compose/compose-file/#command">
@@ -109,14 +135,6 @@ export function ServiceEditor(props: Props) {
           />
           <FormHelperText>Override the default command</FormHelperText>
         </FormControl>
-        <BoundConfigEditor
-          value={service.configs}
-          onChange={(cnf) => {
-            setService((draft) => {
-              draft.configs = cnf;
-            });
-          }}
-        />
         <CpuConfigEditor
           value={service}
           onChange={(cnf) => {
