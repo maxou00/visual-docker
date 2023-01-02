@@ -102,6 +102,17 @@ interface ServiceDependency {
     condition?: "service_started" | "service_healthy" | "service_completed_successfully"
 }
 
+export interface BindVolumeToService {
+    id?: string;
+    type: ""
+    source: string;
+    target?: string;
+    uid?: string;
+    gid?: string;
+    mode?: string;
+}
+
+
 interface DeviceMapping {
     from: string;
     to: string;

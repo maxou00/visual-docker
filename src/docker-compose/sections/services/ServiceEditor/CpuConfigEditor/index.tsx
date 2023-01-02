@@ -100,7 +100,7 @@ export function CpuConfigEditor(props: Props) {
       <FormControl>
         <FormLabel>
           <Link href="https://docs.docker.com/compose/compose-file/#cpu_period">
-            CPU shares
+            CPU Period
           </Link>
         </FormLabel>
         <Input
