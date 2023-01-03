@@ -3,20 +3,21 @@ import { nanoid } from "nanoid";
 import { useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
 import { PrimaryButton } from "../../../../../components/Buttons/Primary";
-import FieldEntry, { Entry } from "./FieldEntry";
+import { BindVolumeFrom } from "../../../../types";
+import FieldEntry from "./FieldEntry";
 
-export default function BoundVolumeConfigEditor({
+export default function CopyVolumesFromEditor({
   value,
   onChange,
 }: {
   value: any;
   onChange: (v: any) => any;
 }) {
-  const [keys, setKeys] = useState<Entry[]>([]);
+  const [keys, setKeys] = useState<BindVolumeFrom[]>([]);
 
   const onAppendKey = useCallback(() => {
     let cpy = [...keys];
-    let collide = cpy.findIndex((c) => c.source === "");
+    let collide = cpy.findIndex((c) => c.id === "");
     if (collide > -1) {
       toast.error(
         "Please edit the existing source entry before adding another"
@@ -25,15 +26,15 @@ export default function BoundVolumeConfigEditor({
     }
     cpy.push({
       id: nanoid(),
-      source: "",
-      type: "volume",
+      managed: true,
+      mode: "rw",
     });
     onChange(cpy);
     setKeys(cpy);
   }, [keys, onChange]);
 
   const onEntryChange = useCallback(
-    (id: string, entry: Entry) => {
+    (id: string, entry: BindVolumeFrom) => {
       let cpy = [...keys];
       let index = cpy.findIndex((k) => k.id === id);
       if (index > -1) {
@@ -61,10 +62,8 @@ export default function BoundVolumeConfigEditor({
   return (
     <VStack w="full" alignItems="flex-start" spacing={4}>
       <VStack w="full" alignItems="flex-start" spacing={2}>
-        <Text>Associated Volumes</Text>
-        <Text fontSize="sm">
-          Here are listed volumes bound to this service.
-        </Text>
+        <Text>Mount Volumes from other service (volumes_from)</Text>
+        <Text fontSize="sm">Here are listed mount configurations.</Text>
       </VStack>
       <VStack w="full" spacing={4}>
         {keys.map((k) => {
@@ -79,7 +78,7 @@ export default function BoundVolumeConfigEditor({
         })}
         <HStack w="full" justifyContent="flex-end">
           <PrimaryButton variant="ghost" size="sm" onClick={onAppendKey}>
-            Bind a volume
+            Add a new mount
           </PrimaryButton>
         </HStack>
       </VStack>
