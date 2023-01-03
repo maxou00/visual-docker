@@ -199,7 +199,7 @@ export default function BoundSecretConfigEditor({
         })}
         <HStack w="full" justifyContent="flex-end">
           <PrimaryButton variant="ghost" size="sm" onClick={onAppendKey}>
-            Bind another config
+            Bind a volume
           </PrimaryButton>
         </HStack>
       </VStack>

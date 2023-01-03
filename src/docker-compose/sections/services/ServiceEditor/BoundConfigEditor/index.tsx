@@ -50,7 +50,7 @@ const FieldEntry = ({
       >
         <option value="">Choose a Config</option>
         {composer.state.configs.map((config) => {
-          return <option value={config.label}>{config.label}</option>;
+          return <option key={config.label} value={config.label}>{config.label}</option>;
         })}
       </Select>
       <HStack w="full" alignItems="flex-start" spacing={4}>
