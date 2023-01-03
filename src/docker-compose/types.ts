@@ -104,12 +104,23 @@ interface ServiceDependency {
 
 export interface BindVolumeToService {
     id?: string;
-    type: ""
+    type: "volume" | "bind" | "npipe" | "tmpfs";
+    read_only?: boolean;
+    bind?: {
+        propagation?: any;
+        create_host_path?: boolean;
+        selinux?: "z" | "Z";
+    };
+    volume?: {
+        nocopy?: boolean;
+    };
+    tmpfs?: {
+        size?: number;
+        mode?: string;
+    }
     source: string;
     target?: string;
-    uid?: string;
-    gid?: string;
-    mode?: string;
+    consistency?: string;
 }
 
 
