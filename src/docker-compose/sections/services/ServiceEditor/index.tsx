@@ -103,6 +103,22 @@ export function ServiceEditor(props: Props) {
             placeholder=""
           />
         </FormControl>
+        <FormControl isRequired>
+          <Link href="https://docs.docker.com/compose/compose-file/#container_name">
+            Container name
+          </Link>
+          <Input
+            value={service.container_name}
+            size="sm"
+            onChange={(ev) => {
+              setService((draft) => {
+                draft.container_name = ev.target.value;
+              });
+            }}
+            variant="outline"
+            placeholder=""
+          />
+        </FormControl>
         <BoundVolumeConfigEditor
           value={service.volumes}
           onChange={(cnf) => {
