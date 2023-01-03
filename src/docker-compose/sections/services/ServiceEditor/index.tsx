@@ -17,6 +17,7 @@ import { PrimaryButton } from '../../../../components/Buttons/Primary'
 import { ServiceConfig } from '../../../types'
 import { BlockIoEditor } from './BlockIoConfigEditor'
 import BoundConfigEditor from './BoundConfigEditor'
+import BoundDependencies from './BoundDependencies/BoundDependencies'
 import BoundSecretConfigEditor from './BoundSecretEditor'
 import BoundVolumeConfigEditor from './BoundVolumeEditor'
 import { CpuConfigEditor } from './CpuConfigEditor'
@@ -131,6 +132,14 @@ export function ServiceEditor(props: Props) {
      onChange={(cnf) => {
       setService((draft) => {
        draft.secrets = cnf
+      })
+     }}
+    />
+    <BoundDependencies
+     value={service.depends_on}
+     onChange={(cnf) => {
+      setService((draft) => {
+       draft.depends_on = cnf
       })
      }}
     />
