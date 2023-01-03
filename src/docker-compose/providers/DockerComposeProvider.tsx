@@ -7,7 +7,13 @@ import {
 import { useImmerReducer } from "use-immer";
 import { IDockerComposeState } from "../state";
 import { initialState, stateReducer } from "../state/reducer";
-import { ConfigFile, NetworkConfig, SecretConfig, VolumeConfig } from "../types";
+import {
+  ConfigFile,
+  NetworkConfig,
+  SecretConfig,
+  ServiceConfig,
+  VolumeConfig,
+} from "../types";
 
 interface DockerComposeContextType {
   state: IDockerComposeState;
@@ -16,6 +22,7 @@ interface DockerComposeContextType {
   addVolume: (conf: VolumeConfig) => any;
   addConfigFile: (conf: ConfigFile) => any;
   addSecret: (conf: SecretConfig) => any;
+  addService: (conf: ServiceConfig) => any;
 }
 
 const Context = createContext<DockerComposeContextType>(undefined as any);
@@ -53,6 +60,10 @@ export function DockerComposeProvider(props: PropsWithChildren<{}>) {
     dispatch({ type: "PUT_SECRET", payload: conf });
   }, []);
 
+  const addService = useCallback((conf: ServiceConfig) => {
+    dispatch({ type: "PUT_SERVICE", payload: conf });
+  }, []);
+
   return (
     <Context.Provider
       value={{
@@ -61,7 +72,8 @@ export function DockerComposeProvider(props: PropsWithChildren<{}>) {
         addNetwork,
         addVolume,
         addConfigFile,
-        addSecret
+        addSecret,
+        addService,
       }}
     >
       {props.children}

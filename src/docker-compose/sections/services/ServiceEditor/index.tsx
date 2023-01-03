@@ -8,11 +8,10 @@ import {
   IconButton,
   Input,
   Link,
-  Text,
   VStack,
 } from "@chakra-ui/react";
 import { Check, Pen } from "phosphor-react";
-import { ChangeEvent, FormEvent, useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useImmer } from "use-immer";
 import { PrimaryButton } from "../../../../components/Buttons/Primary";
 import { ServiceConfig } from "../../../types";
@@ -21,6 +20,7 @@ import BoundConfigEditor from "./BoundConfigEditor";
 import BoundSecretConfigEditor from "./BoundSecretEditor";
 import BoundVolumeConfigEditor from "./BoundVolumeEditor";
 import { CpuConfigEditor } from "./CpuConfigEditor";
+import CopyVolumesFromEditor from "./VolumesFromEditor";
 
 interface Props {
   value?: ServiceConfig;
@@ -32,7 +32,17 @@ export function ServiceEditor(props: Props) {
     ...props.value,
     id: props.value?.id || "",
     label: props.value?.label || "",
+    configs: [],
+    secrets: [],
+    volumes: [],
+    volumes_from: [],
   });
+
+  useEffect(() => {
+    if (props.value) {
+      setService(props.value);
+    }
+  }, [props.value]);
 
   const [editLabel, setEditLabel] = useState(false);
 
@@ -93,10 +103,18 @@ export function ServiceEditor(props: Props) {
           />
         </FormControl>
         <BoundVolumeConfigEditor
-          value={service.configs}
+          value={service.volumes}
           onChange={(cnf) => {
             setService((draft) => {
-              draft.configs = cnf;
+              draft.volumes = cnf;
+            });
+          }}
+        />
+        <CopyVolumesFromEditor
+          value={service.volumes_from}
+          onChange={(cnf) => {
+            setService((draft) => {
+              draft.volumes_from = cnf;
             });
           }}
         />
@@ -109,10 +127,10 @@ export function ServiceEditor(props: Props) {
           }}
         />
         <BoundSecretConfigEditor
-          value={service.configs}
+          value={service.secrets}
           onChange={(cnf) => {
             setService((draft) => {
-              draft.configs = cnf;
+              draft.secrets = cnf;
             });
           }}
         />
