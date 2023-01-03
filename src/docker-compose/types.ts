@@ -10,6 +10,7 @@ export interface IPAMConfig {
 }
 
 export interface NetworkConfig {
+  id?: string;
   label: string;
   driver?: "bridge" | "host" | "overlay" | "ipvlan" | "macvlan" | "none";
   driver_opts?: any;
@@ -22,6 +23,7 @@ export interface NetworkConfig {
 }
 
 export interface VolumeConfig {
+  id?: string;
   label: string;
   name?: string;
   external?:
@@ -35,6 +37,7 @@ export interface VolumeConfig {
 }
 
 export interface ConfigFile {
+  id?: string;
   label: string;
   name?: string;
   external?: boolean;
@@ -42,6 +45,7 @@ export interface ConfigFile {
 }
 
 export interface SecretConfig {
+  id?: string;
   label: string;
   name?: string;
   external?: boolean;

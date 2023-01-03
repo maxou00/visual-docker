@@ -1,6 +1,6 @@
 import { Box, Heading, HStack, Text, VStack } from "@chakra-ui/react";
 import { nanoid } from "nanoid";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { PrimaryButton } from "../../../components/Buttons/Primary";
 import { useDockerComposeProject } from "../../providers/DockerComposeProvider";
 import { ServiceConfig } from "../../types";
@@ -13,6 +13,10 @@ export function ProjectServices() {
   >();
 
   const composer = useDockerComposeProject();
+
+  useEffect(() => {
+    setServices(composer.state.services);
+  }, [composer.state.services]);
 
   const onAddService = useCallback(() => {
     let newItem: ServiceConfig = {

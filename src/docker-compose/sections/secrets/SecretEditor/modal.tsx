@@ -11,6 +11,7 @@ import {
   ModalProps,
   VStack,
 } from "@chakra-ui/react";
+import { nanoid } from "nanoid";
 import { useCallback } from "react";
 import { useImmer } from "use-immer";
 import { SecretEditor } from ".";
@@ -18,10 +19,14 @@ import { PrimaryButton } from "../../../../components/Buttons/Primary";
 import { useDockerComposeProject } from "../../../providers/DockerComposeProvider";
 import { SecretConfig } from "../../../types";
 
+const initial: SecretConfig = {
+  label: "",
+};
 export function CreateSecretModal(props: Omit<ModalProps, "children">) {
   const [content, setContent] = useImmer<{ item: SecretConfig }>({
     item: {
-      label: "",
+      id: nanoid(),
+      ...initial,
     },
   });
 
@@ -30,6 +35,12 @@ export function CreateSecretModal(props: Omit<ModalProps, "children">) {
   const onSubmit = useCallback(() => {
     addSecret(content.item);
     if (props.onClose) {
+      setContent({
+        item: {
+          id: nanoid(),
+          ...initial,
+        },
+      });
       props.onClose();
     }
   }, [content, props.onClose]);
