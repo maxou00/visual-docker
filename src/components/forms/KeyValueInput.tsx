@@ -79,11 +79,7 @@ export default function KeyValueInput({
 
  const onDeleteEntry = useCallback(
   (id: string) => {
-   let cpy = [...keys]
-   let index = cpy.findIndex((k) => k.id === id)
-   if (index > -1) {
-    cpy.splice(index, 1)
-   }
+   const cpy = [...keys].filter((item) => item.id !== id)
    onChange(cpy)
    setKeys(cpy)
   },
