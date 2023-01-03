@@ -21,7 +21,15 @@ export const initialState: IDockerComposeState = {
 };
 
 export function stateReducer(draft: Draft<IDockerComposeState>, action: any) {
-  if (action.type === "SET_PROJECT_NAME") {
+  if (action.type === "FILL_STATE") {
+    let initial = action.payload as IDockerComposeState;
+    draft.project = initial.project;
+    draft.configs = initial.configs;
+    draft.networks = initial.networks;
+    draft.secrets = initial.secrets;
+    draft.volumes = initial.volumes;
+    draft.services = initial.services;
+  } else if (action.type === "SET_PROJECT_NAME") {
     draft.project.name = action.payload;
   } else if (action.type === "PUT_NETWORK") {
     let net = action.payload as NetworkConfig;

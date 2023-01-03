@@ -52,22 +52,6 @@ const FieldEntry = ({
     <VStack w="full" alignItems="center" spacing={2}>
       <Select
         size="sm"
-        value={entry.source}
-        onChange={(nodeEv) => {
-          onChange({ ...entry, source: nodeEv.target.value });
-        }}
-      >
-        <option value="">Choose a Volume</option>
-        {composer.state.volumes.map((config) => {
-          return (
-            <option key={config.label} value={config.label}>
-              {config.label}
-            </option>
-          );
-        })}
-      </Select>
-      <Select
-        size="sm"
         value={entry.type}
         onChange={(nodeEv) => {
           onChange({ ...entry, type: nodeEv.target.value as any });
@@ -82,6 +66,40 @@ const FieldEntry = ({
           );
         })}
       </Select>
+      {["volume"].includes(entry.type) ? (
+        <Select
+          size="sm"
+          value={entry.source}
+          onChange={(nodeEv) => {
+            onChange({ ...entry, source: nodeEv.target.value });
+          }}
+        >
+          <option value="">Choose a Volume</option>
+          {composer.state.volumes.map((config) => {
+            return (
+              <option key={config.label} value={config.label}>
+                {config.label}
+              </option>
+            );
+          })}
+        </Select>
+      ) : (
+        <FormControl>
+          <FormLabel>Source path within the host</FormLabel>
+          <Input
+            size="sm"
+            flexGrow={1}
+            placeholder=""
+            value={entry.target}
+            onChange={({ target }) =>
+              onChange({ ...entry, source: target.value })
+            }
+          />
+          <FormHelperText>
+            Enter the path on the host you want to mount in the container
+          </FormHelperText>
+        </FormControl>
+      )}
       <FormControl>
         <Checkbox
           checked={entry.read_only}

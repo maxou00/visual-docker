@@ -3,6 +3,8 @@ import {
   PropsWithChildren,
   useCallback,
   useContext,
+  useEffect,
+  useState,
 } from "react";
 import { useImmerReducer } from "use-immer";
 import { IDockerComposeState } from "../state";
@@ -39,6 +41,7 @@ export const useDockerComposeProject = () => {
 
 export function DockerComposeProvider(props: PropsWithChildren<{}>) {
   const [state, dispatch] = useImmerReducer(stateReducer, initialState);
+  const [init, setInit] = useState(false);
 
   const setProjectName = useCallback((name: string) => {
     dispatch({ type: "SET_PROJECT_NAME", payload: name });
@@ -63,6 +66,28 @@ export function DockerComposeProvider(props: PropsWithChildren<{}>) {
   const addService = useCallback((conf: ServiceConfig) => {
     dispatch({ type: "PUT_SERVICE", payload: conf });
   }, []);
+
+  useEffect(() => {
+    let stored = localStorage.getItem("docker:compose/latest");
+    if (stored) {
+      let decoded = JSON.parse(stored);
+      if (decoded) {
+        dispatch({ type: "FILL_STATE", payload: decoded });
+      }
+    }
+    setInit(true);
+  }, []);
+
+  useEffect(() => {
+    if (state && init) {
+      console.log(state);
+      localStorage.setItem("docker:compose/latest", JSON.stringify(state));
+    }
+  }, [state, init]);
+
+  if (!init) {
+    return <></>;
+  }
 
   return (
     <Context.Provider
