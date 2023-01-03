@@ -98,7 +98,8 @@ export interface BindConfigToService {
   mode?: string;
 }
 
-interface ServiceDependency {
+export interface ServiceDependency {
+  id?: string;
   label: string;
   condition?:
     | "service_started"
