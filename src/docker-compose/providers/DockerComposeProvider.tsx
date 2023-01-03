@@ -71,6 +71,7 @@ export function DockerComposeProvider(props: PropsWithChildren<{}>) {
     let stored = localStorage.getItem("docker:compose/latest");
     if (stored) {
       let decoded = JSON.parse(stored);
+      console.log("Decoded from storage ", decoded);
       if (decoded) {
         dispatch({ type: "FILL_STATE", payload: decoded });
       }

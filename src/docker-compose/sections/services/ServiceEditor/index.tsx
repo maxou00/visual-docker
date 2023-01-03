@@ -41,7 +41,7 @@ export function ServiceEditor(props: Props) {
 
   useEffect(() => {
     if (props.value) {
-      setService(props.value);
+      setService({ ...props.value });
     }
   }, [props.value]);
 
