@@ -2,16 +2,11 @@ import {
   Button,
   Heading,
   HStack,
-  Modal,
   useDisclosure,
-  useModal,
   VStack,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
-import {
-  DockerComposeProvider,
-  useDockerComposeProject,
-} from "../providers/DockerComposeProvider";
+import { useDockerComposeProject } from "../providers/DockerComposeProvider";
 import { ProjectConfigFiles } from "./configs";
 import { ProjectNetworks } from "./networks";
 import { ProjectNameEditor } from "./ProjectName";
