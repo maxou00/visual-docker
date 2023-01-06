@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { PrimaryButton } from '../../../../../components/Buttons/Primary'
 import { ServiceDependency } from '../../../../types'
-import FieldEntry from './FieldEntry'
+import FieldEntry from './BoundDependenciesEditorFieldEntry'
 
 export default function BoundDependencies({
  value,
