@@ -6,6 +6,7 @@ import {
  Select,
  VStack
 } from '@chakra-ui/react'
+import { useCurrentService } from '../../../../providers/CurrentServiceConfig'
 import { useDockerComposeProject } from '../../../../providers/DockerComposeProvider'
 import { ServiceDependency } from '../../../../types'
 
@@ -15,8 +16,8 @@ export default function FieldEntry({
  onDelete
 }: {
  entry: ServiceDependency
- onChange: (entry: ServiceDependency) => void
- onDelete: () => void
+ onChange: (entry: ServiceDependency) => any
+ onDelete: () => any
 }) {
  const composer = useDockerComposeProject()
 
@@ -32,6 +33,8 @@ export default function FieldEntry({
   }
  ]
 
+ const currentService = useCurrentService()
+
  return (
   <VStack w='full' alignItems='center' spacing={2}>
    <HStack w='full' alignItems='flex-start' spacing={4}>
@@ -45,13 +48,15 @@ export default function FieldEntry({
       }}
      >
       <option value=''>Choose a Service</option>
-      {composer.state.services.map((config) => {
-       return (
-        <option key={config.label} value={config.label}>
-         {config.label}
-        </option>
-       )
-      })}
+      {composer.state.services
+       .filter((s) => s.id !== currentService.service.id)
+       .map((config) => {
+        return (
+         <option key={config.label} value={config.label}>
+          {config.label}
+         </option>
+        )
+       })}
      </Select>
     </FormControl>
 
