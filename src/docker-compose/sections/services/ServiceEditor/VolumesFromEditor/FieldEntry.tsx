@@ -9,6 +9,7 @@ import {
   Select,
   VStack,
 } from "@chakra-ui/react";
+import { useCurrentService } from "../../../../providers/CurrentServiceConfig";
 import { useDockerComposeProject } from "../../../../providers/DockerComposeProvider";
 import { BindVolumeFrom } from "../../../../types";
 
@@ -22,6 +23,7 @@ export default function FieldEntry({
   onDelete: () => any;
 }) {
   const composer = useDockerComposeProject();
+  const { service } = useCurrentService();
 
   return (
     <VStack w="full" alignItems="flex-start" spacing={2}>
@@ -49,9 +51,11 @@ export default function FieldEntry({
                 onChange({ ...entry, service: target.value })
               }
             >
-              {composer.state.services.map((s) => {
-                return <option key={s.label}>{s.label || "Untitled"}</option>;
-              })}
+              {composer.state.services
+                .filter((s) => s.id === service.id)
+                .map((s) => {
+                  return <option key={s.id}>{s.label || "Untitled"}</option>;
+                })}
             </Select>
           ) : (
             <Input
