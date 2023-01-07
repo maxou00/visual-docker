@@ -134,6 +134,18 @@ export function ServiceEditor(props: Props) {
               });
             }}
           />
+          <DVInput
+            label="Entry Point"
+            placeholder="/code/entrypoint.sh"
+            labelLink="https://docs.docker.com/compose/compose-file/#entrypoint"
+            value={service.entrypoint}
+            onChange={({ target: { value } }) => {
+              setService((draft) => {
+                draft.entrypoint = value;
+              });
+            }}
+            helperText="entrypoint overrides the default entrypoint for the Docker image (i.e. ENTRYPOINT set by Dockerfile). Compose implementations MUST clear out any default command on the Docker image - both ENTRYPOINT and CMD instruction in the Dockerfile - when entrypoint is configured by a Compose file. If command is also set, it is used as parameter to entrypoint as a replacement for Docker image’s CMD"
+          />
 
           <BoundVolumeConfigEditor
             value={service.volumes}
