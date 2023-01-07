@@ -128,9 +128,9 @@ export function ServiceEditor(props: Props) {
             placeholder="8.8.8.8"
             labelLink="https://docs.docker.com/compose/compose-file/#devices"
             value={service.dns}
-            onChange={(ev) => {
+            onChange={({ target: { value } }) => {
               setService((draft) => {
-                draft.dns = ev.target.value;
+                draft.dns = value;
               });
             }}
           />
