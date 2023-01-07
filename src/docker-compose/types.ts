@@ -155,6 +155,7 @@ export interface ServiceConfig extends CpuConfig {
   label: string;
   domainName?: string;
   entrypoint?: string;
+  envFile?: string;
   dns?: string;
   image?: string;
   container_name?: string;

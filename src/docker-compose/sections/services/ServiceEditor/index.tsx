@@ -147,6 +147,19 @@ export function ServiceEditor(props: Props) {
             helperText="entrypoint overrides the default entrypoint for the Docker image (i.e. ENTRYPOINT set by Dockerfile). Compose implementations MUST clear out any default command on the Docker image - both ENTRYPOINT and CMD instruction in the Dockerfile - when entrypoint is configured by a Compose file. If command is also set, it is used as parameter to entrypoint as a replacement for Docker image’s CMD"
           />
 
+          <DVInput
+            label="Env File"
+            placeholder="./.env | ./a.env ; ./b.env;"
+            labelLink="https://docs.docker.com/compose/compose-file/#env_file"
+            value={service.envFile}
+            onChange={({ target: { value } }) => {
+              setService((draft) => {
+                draft.envFile = value;
+              });
+            }}
+            helperText="If you have several environment files, separate them with semicolons (;)"
+          />
+
           <BoundVolumeConfigEditor
             value={service.volumes}
             onChange={(cnf) => {
