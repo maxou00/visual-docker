@@ -153,6 +153,7 @@ interface DeviceMapping {
 export interface ServiceConfig extends CpuConfig {
   id: string;
   label: string;
+  expose?: string;
   domainName?: string;
   entrypoint?: string;
   envFile?: string;

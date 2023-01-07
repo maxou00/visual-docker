@@ -160,6 +160,19 @@ export function ServiceEditor(props: Props) {
             helperText="If you have several environment files, separate them with semicolons (;)"
           />
 
+          <DVInput
+            label="Expose"
+            placeholder="3000:8000"
+            labelLink="https://docs.docker.com/compose/compose-file/#expose"
+            value={service.envFile}
+            onChange={({ target: { value } }) => {
+              setService((draft) => {
+                draft.expose = value;
+              });
+            }}
+            helperText="expose defines the ports that Compose implementations MUST expose from container. These ports MUST be accessible to linked services and SHOULD NOT be published to the host machine. Only the internal container ports can be specified."
+          />
+
           <BoundVolumeConfigEditor
             value={service.volumes}
             onChange={(cnf) => {
