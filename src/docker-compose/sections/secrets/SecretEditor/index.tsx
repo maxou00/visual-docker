@@ -1,168 +1,176 @@
 import {
- Alert,
- AlertDescription,
- AlertTitle,
- Checkbox,
- FormControl,
- FormHelperText,
- FormLabel,
- Input,
- VStack
-} from '@chakra-ui/react'
-import { ChangeEvent, useCallback, useEffect } from 'react'
-import { useImmer } from 'use-immer'
-import { SecretConfig } from '../../../types'
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Checkbox,
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  Input,
+  VStack,
+} from "@chakra-ui/react";
+import { ChangeEvent, useCallback, useEffect } from "react";
+import { useImmer } from "use-immer";
+import { SecretConfig } from "../../../types";
 
 interface Props {
- value?: SecretConfig
- onChange: (config: SecretConfig) => any
+  value?: SecretConfig;
+  onChange: (config: SecretConfig) => any;
 }
 
 export function SecretEditor(props: Props) {
- const [content, setContent] = useImmer<SecretConfig>(
-  props.value || {
-   label: ''
-  }
- )
+  const [content, setContent] = useImmer<SecretConfig>(
+    props.value || {
+      label: "",
+    }
+  );
 
- useEffect(() => {
-  props.onChange(content)
- }, [content])
+  useEffect(() => {
+    props.onChange(content);
+  }, [content]);
 
- const onLabelChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
-  let label = ev.currentTarget.value
-  setContent((draft) => {
-   draft.label = label
-  })
- }, [])
+  const onLabelChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
+    let label = ev.currentTarget.value;
+    setContent((draft) => {
+      draft.label = label;
+    });
+  }, []);
 
- const onFileChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
-  let label = ev.currentTarget.value
-  setContent((draft) => {
-   if (!draft.external) {
-    draft.file = label
-   }
-  })
- }, [])
-
- const onEnvChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
-  let label = ev.currentTarget.value
-  setContent((draft) => {
-   if (!draft.external) {
-    draft.environment = label
-   }
-  })
- }, [])
-
- const onNameChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
-  let label = ev.currentTarget.value
-  setContent((draft) => {
-   draft.name = label
-  })
- }, [])
-
- const onExternalChange = useCallback((options: SecretConfig['external']) => {
-  setContent((draft) => {
-   if (options) {
-    draft.external = true
-    draft.file = undefined
-    draft.environment = undefined
-   } else {
-    draft.external = false
-   }
-  })
- }, [])
-
- return (
-  <VStack alignItems='flex-start' spacing={4}>
-   <FormControl isRequired>
-    <FormLabel>Label</FormLabel>
-    <Input
-     value={content.label}
-     fontSize='md'
-     onChange={onLabelChange}
-     variant='outline'
-     placeholder='Enter a nice eye-catching name'
-    />
-    <FormHelperText>Avoid using spaces. Instead use "-" or "_"</FormHelperText>
-   </FormControl>
-   <FormControl>
-    <Checkbox
-     isChecked={Boolean(content.external)}
-     onChange={(ev) => {
-      if (ev.target.checked) {
-       onExternalChange(true)
-      } else {
-       onExternalChange(false)
+  const onFileChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
+    let label = ev.currentTarget.value;
+    setContent((draft) => {
+      if (!draft.external) {
+        draft.file = label;
       }
-     }}
-    >
-     This secret is external
-    </Checkbox>
-   </FormControl>
-   <VStack alignItems='flex-start' spacing={2}>
-    <FormControl>
-     <FormLabel>
-      {content.external ? 'Name of the existent secret' : 'Custom secret name'}
-     </FormLabel>
-     <Input
-      value={content.name || ''}
-      fontSize='md'
-      onChange={onNameChange}
-      variant='outline'
-      placeholder='A custom name for your secret'
-     />
-     <FormHelperText>Avoid using spaces. Instead use "-" or "_"</FormHelperText>
-     <FormHelperText>
-      {content.external
-       ? `
+    });
+  }, []);
+
+  const onEnvChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
+    let label = ev.currentTarget.value;
+    setContent((draft) => {
+      if (!draft.external) {
+        draft.environment = label;
+      }
+    });
+  }, []);
+
+  const onNameChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
+    let label = ev.currentTarget.value;
+    setContent((draft) => {
+      draft.name = label;
+    });
+  }, []);
+
+  const onExternalChange = useCallback((options: SecretConfig["external"]) => {
+    setContent((draft) => {
+      if (options) {
+        draft.external = true;
+        draft.file = undefined;
+        draft.environment = undefined;
+      } else {
+        draft.external = false;
+      }
+    });
+  }, []);
+
+  return (
+    <VStack alignItems="flex-start" spacing={4}>
+      <FormControl isRequired>
+        <FormLabel>Label</FormLabel>
+        <Input
+          value={content.label}
+          fontSize="md"
+          onChange={onLabelChange}
+          variant="outline"
+          placeholder="Enter a nice eye-catching name"
+        />
+        <FormHelperText>
+          Avoid using spaces. Instead use "-" or "_"
+        </FormHelperText>
+      </FormControl>
+      <FormControl>
+        <Checkbox
+          isChecked={Boolean(content.external)}
+          onChange={(ev) => {
+            if (ev.target.checked) {
+              onExternalChange(true);
+            } else {
+              onExternalChange(false);
+            }
+          }}
+        >
+          This secret is external
+        </Checkbox>
+      </FormControl>
+      <VStack alignItems="flex-start" spacing={2}>
+        <FormControl>
+          <FormLabel>
+            {content.external
+              ? "Name of the existent secret"
+              : "Custom secret name"}
+          </FormLabel>
+          <Input
+            value={content.name || ""}
+            fontSize="md"
+            onChange={onNameChange}
+            variant="outline"
+            placeholder="A custom name for your secret"
+          />
+          <FormHelperText>
+            Avoid using spaces. Instead use "-" or "_"
+          </FormHelperText>
+          <FormHelperText>
+            {content.external
+              ? `
                 While the label will be used in the generated compose file, the name
               is the name of the secret existing outside of this environment, that you prefer to directly use. It is unscoped,
               and thus will be used as is.
               `
-       : `
+              : `
                 While the label will be used in the generated compose file, the name
               is the custom name you give to this config globally. It is unscoped,
               and thus will be used as is.
                 `}
-     </FormHelperText>
-    </FormControl>
-    {!content.external && (
-     <FormControl isRequired>
-      <FormLabel>File path on host system with the secret content</FormLabel>
-      <Input
-       value={content.file || ''}
-       fontSize='md'
-       onChange={onFileChange}
-       variant='outline'
-       placeholder=''
-      />
-     </FormControl>
-    )}
-    {!content.external && (
-     <FormControl isRequired>
-      <FormLabel>
-       Or environment variable on the host with the secret content
-      </FormLabel>
-      <Input
-       value={content.environment || ''}
-       fontSize='md'
-       onChange={onEnvChange}
-       variant='outline'
-       placeholder=''
-      />
-     </FormControl>
-    )}
-    {content.external && (
-     <Alert colorScheme='orange' rounded='md'>
-      <AlertTitle>Other options have been disabled.</AlertTitle>
-      <AlertDescription>
-       External secrets are not managed by compose. Thus, file path and
-       environment options are useless.
-      </AlertDescription>
-     </Alert>
-    )}
-   </VStack>
-  </VStack>
- )
+          </FormHelperText>
+        </FormControl>
+        {!content.external && (
+          <FormControl isRequired>
+            <FormLabel>
+              File path on host system with the secret content
+            </FormLabel>
+            <Input
+              value={content.file || ""}
+              fontSize="md"
+              onChange={onFileChange}
+              variant="outline"
+              placeholder=""
+            />
+          </FormControl>
+        )}
+        {!content.external && (
+          <FormControl isRequired>
+            <FormLabel>
+              Or environment variable on the host with the secret content
+            </FormLabel>
+            <Input
+              value={content.environment || ""}
+              fontSize="md"
+              onChange={onEnvChange}
+              variant="outline"
+              placeholder=""
+            />
+          </FormControl>
+        )}
+        {content.external && (
+          <Alert colorScheme="orange" rounded="md">
+            <AlertTitle>Other options have been disabled.</AlertTitle>
+            <AlertDescription>
+              External secrets are not managed by compose. Thus, file path and
+              environment options are useless.
+            </AlertDescription>
+          </Alert>
+        )}
+      </VStack>
+    </VStack>
+  );
 }

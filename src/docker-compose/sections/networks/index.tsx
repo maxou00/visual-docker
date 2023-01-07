@@ -20,7 +20,14 @@ export function ProjectNetworks() {
   const [netIndex, setNetIndex] = useState(-1);
 
   return (
-    <VStack bg="surface" w="full" alignItems="flex-start" spacing={4} p={4} rounded="md">
+    <VStack
+      bg="surface"
+      w="full"
+      alignItems="flex-start"
+      spacing={4}
+      p={4}
+      rounded="md"
+    >
       <Heading fontSize="lg">Networks</Heading>
       <Text maxW="54ch" fontSize="sm" opacity={0.55}>
         Networks bring exchange capability within your environment, helping you

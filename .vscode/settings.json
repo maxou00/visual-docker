@@ -1,37 +1,43 @@
 {
- "[typescript]": {
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.codeActionsOnSave": {
-   "source.fixAll": true,
-   "source.organizeImports": true
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true,
+      "source.organizeImports": true
+    },
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true
   },
-  "editor.formatOnSave": true,
-  "editor.formatOnType": true
- },
- "[typescriptreact]": {
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.codeActionsOnSave": {
-   "source.fixAll": true,
-   "source.organizeImports": true
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true,
+      "source.organizeImports": true
+    },
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true
   },
-  "editor.formatOnSave": true,
-  "editor.formatOnType": true
- },
- "[sql]": {
-  "editor.formatOnSave": false
- },
- "[scss]": {
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.codeActionsOnSave": {
-   "source.fixAll": true,
-   "source.organizeImports": true
+  "[sql]": {
+    "editor.formatOnSave": false
   },
-  "editor.rulers": [90],
-  "editor.formatOnSave": true,
-  "editor.formatOnType": true
- },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true,
+      "source.organizeImports": true
+    },
+    "editor.rulers": [90],
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true
+  },
 
- "editor.rulers": [90],
- "editor.tabSize": 2,
- "html.format.wrapLineLength": 90
+  "editor.rulers": [90],
+  "editor.tabSize": 2,
+  "html.format.wrapLineLength": 90,
+  "commandOnAllFiles.commands": {
+    "Format File": {
+      "command": "editor.action.formatDocument",
+      "includeFileExtensions": [".tsx", ".ts", ".scss"]
+    }
+  }
 }

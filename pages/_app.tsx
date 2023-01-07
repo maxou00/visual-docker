@@ -8,13 +8,15 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <Component {...pageProps} />
-      <Toaster toastOptions={{
-        style: {
-          background: "var(--app-colors-background)",
-          color: "var(--app-colors-onBackground)",
-          fontFamily: "var(--app-fonts-heading)"
-        }
-      }}/>
+      <Toaster
+        toastOptions={{
+          style: {
+            background: "var(--app-colors-background)",
+            color: "var(--app-colors-onBackground)",
+            fontFamily: "var(--app-fonts-heading)",
+          },
+        }}
+      />
     </ChakraProvider>
   );
 }

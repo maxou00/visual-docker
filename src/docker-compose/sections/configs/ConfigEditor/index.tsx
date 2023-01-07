@@ -144,8 +144,8 @@ export function ConfigEditor(props: Props) {
           <Alert colorScheme="orange" rounded="md">
             <AlertTitle>Other options have been disabled.</AlertTitle>
             <AlertDescription>
-              External config are not managed by compose. Thus, file path
-              option is useless.
+              External config are not managed by compose. Thus, file path option
+              is useless.
             </AlertDescription>
           </Alert>
         )}

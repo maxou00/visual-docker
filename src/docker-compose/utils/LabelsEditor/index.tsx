@@ -7,8 +7,12 @@ interface Props {
 }
 
 export function LabelsEditor(props: Props) {
-  return <VStack w="full" alignItems="flex-start">
-    <Text fontSize="md" fontWeight="medium">Custom Labels</Text>
-    <KeyValueInput value={props.value} onChange={props.onChange} />;
-  </VStack>
+  return (
+    <VStack w="full" alignItems="flex-start">
+      <Text fontSize="md" fontWeight="medium">
+        Custom Labels
+      </Text>
+      <KeyValueInput value={props.value} onChange={props.onChange} />;
+    </VStack>
+  );
 }
