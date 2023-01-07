@@ -1,5 +1,6 @@
-import { FormControl, FormHelperText, Input, Link } from "@chakra-ui/react";
-import { ChangeEvent } from "react";
+import { FormControl, FormHelperText, Input, Link } from '@chakra-ui/react';
+import { ChangeEvent } from 'react';
+
 interface DVInputProps {
   labelLink?: string;
   label?: string;
@@ -9,6 +10,7 @@ interface DVInputProps {
   placeholder?: string;
   helperText?: string;
 }
+
 export default function DVInput({
   onChange,
   value,
@@ -26,7 +28,7 @@ export default function DVInput({
         size="sm"
         onChange={onChange}
         variant="outline"
-        placeholder={placeholder ?? ""}
+        placeholder={placeholder ?? ''}
       />
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
     </FormControl>
