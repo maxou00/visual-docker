@@ -5,21 +5,21 @@ import {
   IconButton,
   Input,
   VStack,
-} from "@chakra-ui/react";
-import { Check, Pen } from "phosphor-react";
-import { useCallback, useEffect, useState } from "react";
-import { useImmer } from "use-immer";
-import { PrimaryButton } from "../../../../components/Buttons/Primary";
-import DVInput from "../../../../components/DVInput/DVInput";
-import { ProvideService } from "../../../providers/CurrentServiceConfig";
-import { ServiceConfig } from "../../../types";
-import { BlockIoEditor } from "./BlockIoConfigEditor";
-import BoundConfigEditor from "./BoundConfigEditor";
-import BoundDependencies from "./BoundDependenciesEditor";
-import BoundSecretConfigEditor from "./BoundSecretEditor";
-import BoundVolumeConfigEditor from "./BoundVolumeEditor";
-import { CpuConfigEditor } from "./CpuConfigEditor";
-import CopyVolumesFromEditor from "./VolumesFromEditor";
+} from '@chakra-ui/react';
+import { Check, Pen } from 'phosphor-react';
+import { useCallback, useEffect, useState } from 'react';
+import { useImmer } from 'use-immer';
+import { PrimaryButton } from '../../../../components/Buttons/Primary';
+import DVInput from '../../../../components/DVInput/DVInput';
+import { ProvideService } from '../../../providers/CurrentServiceConfig';
+import { ServiceConfig } from '../../../types';
+import { BlockIoEditor } from './BlockIoConfigEditor';
+import BoundConfigEditor from './BoundConfigEditor';
+import BoundDependencies from './BoundDependenciesEditor';
+import BoundSecretConfigEditor from './BoundSecretEditor';
+import BoundVolumeConfigEditor from './BoundVolumeEditor';
+import { CpuConfigEditor } from './CpuConfigEditor';
+import CopyVolumesFromEditor from './VolumesFromEditor';
 
 interface Props {
   value?: ServiceConfig;
@@ -29,8 +29,8 @@ interface Props {
 export function ServiceEditor(props: Props) {
   const [service, setService] = useImmer<ServiceConfig>({
     ...props.value,
-    id: props.value?.id || "",
-    label: props.value?.label || "",
+    id: props.value?.id || '',
+    label: props.value?.label || '',
     configs: [],
     secrets: [],
     volumes: [],
@@ -58,7 +58,7 @@ export function ServiceEditor(props: Props) {
         <HStack w="full" p={4}>
           {!editLabel && (
             <Heading fontSize="lg" fontWeight="bold">
-              {service.label || "Set your service label"}
+              {service.label || 'Set your service label'}
             </Heading>
           )}
           {editLabel && (
@@ -67,11 +67,11 @@ export function ServiceEditor(props: Props) {
               value={service.label}
               onInput={(ev) => {
                 setService((draft) => {
-                  draft.label = (ev.target as HTMLInputElement).value || "";
+                  draft.label = (ev.target as HTMLInputElement).value || '';
                 });
               }}
               onKeyDown={(ev) => {
-                if (ev.code.toLowerCase() === "enter") {
+                if (ev.code.toLowerCase() === 'enter') {
                   onApplyChanges();
                 }
               }}
@@ -113,7 +113,6 @@ export function ServiceEditor(props: Props) {
           />
 
           <DVInput
-            isRequired
             label="Domain name"
             labelLink="https://docs.docker.com/compose/compose-file/#domainname"
             value={service.domainName}
@@ -122,6 +121,30 @@ export function ServiceEditor(props: Props) {
                 draft.domainName = ev.target.value;
               });
             }}
+          />
+
+          <DVInput
+            label="DNS"
+            placeholder="8.8.8.8"
+            labelLink="https://docs.docker.com/compose/compose-file/#devices"
+            value={service.dns}
+            onChange={({ target: { value } }) => {
+              setService((draft) => {
+                draft.dns = value;
+              });
+            }}
+          />
+          <DVInput
+            label="Entry Point"
+            placeholder="/code/entrypoint.sh"
+            labelLink="https://docs.docker.com/compose/compose-file/#entrypoint"
+            value={service.entrypoint}
+            onChange={({ target: { value } }) => {
+              setService((draft) => {
+                draft.entrypoint = value;
+              });
+            }}
+            helperText="entrypoint overrides the default entrypoint for the Docker image (i.e. ENTRYPOINT set by Dockerfile). Compose implementations MUST clear out any default command on the Docker image - both ENTRYPOINT and CMD instruction in the Dockerfile - when entrypoint is configured by a Compose file. If command is also set, it is used as parameter to entrypoint as a replacement for Docker image’s CMD"
           />
 
           <BoundVolumeConfigEditor

@@ -33,11 +33,5 @@
 
   "editor.rulers": [90],
   "editor.tabSize": 2,
-  "html.format.wrapLineLength": 90,
-  "commandOnAllFiles.commands": {
-    "Format File": {
-      "command": "editor.action.formatDocument",
-      "includeFileExtensions": [".tsx", ".ts", ".scss"]
-    }
-  }
+  "html.format.wrapLineLength": 90
 }

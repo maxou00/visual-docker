@@ -1,5 +1,5 @@
 export interface IPAMConfig {
-  driver: "default";
+  driver: 'default';
   config: {
     subnet: string;
     ip_range: string;
@@ -12,7 +12,7 @@ export interface IPAMConfig {
 export interface NetworkConfig {
   id?: string;
   label: string;
-  driver?: "bridge" | "host" | "overlay" | "ipvlan" | "macvlan" | "none";
+  driver?: 'bridge' | 'host' | 'overlay' | 'ipvlan' | 'macvlan' | 'none';
   driver_opts?: any;
   enable_ipv6?: boolean;
   external?: boolean;
@@ -106,19 +106,19 @@ export interface ServiceDependency {
   id?: string;
   label: string;
   condition?:
-    | "service_started"
-    | "service_healthy"
-    | "service_completed_successfully";
+    | 'service_started'
+    | 'service_healthy'
+    | 'service_completed_successfully';
 }
 
 export interface BindVolumeToService {
   id?: string;
-  type: "volume" | "bind" | "npipe" | "tmpfs";
+  type: 'volume' | 'bind' | 'npipe' | 'tmpfs';
   read_only?: boolean;
   bind?: {
     propagation?: any;
     create_host_path?: boolean;
-    selinux?: "z" | "Z";
+    selinux?: 'z' | 'Z';
   };
   volume?: {
     nocopy?: boolean;
@@ -141,7 +141,7 @@ export interface BindVolumeFrom {
   id?: string;
   managed?: boolean;
   service?: string;
-  mode?: "rw" | "ro";
+  mode?: 'rw' | 'ro';
 }
 
 interface DeviceMapping {
@@ -154,6 +154,8 @@ export interface ServiceConfig extends CpuConfig {
   id: string;
   label: string;
   domainName?: string;
+  entrypoint?: string;
+  dns?: string;
   image?: string;
   container_name?: string;
   blkio_config?: BlockIoConfig;
