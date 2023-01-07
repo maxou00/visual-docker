@@ -162,7 +162,7 @@ export function ServiceEditor(props: Props) {
 
           <DVInput
             label="Expose"
-            placeholder="3000:8000"
+            placeholder=" 3000:8000 "
             labelLink="https://docs.docker.com/compose/compose-file/#expose"
             value={service.envFile}
             onChange={({ target: { value } }) => {
