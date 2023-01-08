@@ -20,6 +20,7 @@ import BoundSecretConfigEditor from './BoundSecretEditor';
 import BoundVolumeConfigEditor from './BoundVolumeEditor';
 import { CpuConfigEditor } from './CpuConfigEditor';
 import { EnvironmentKeysEditor } from './EnvironmentKeysEditor';
+import { PortConfigEditor } from './PortEditor';
 import CopyVolumesFromEditor from './VolumesFromEditor';
 
 interface Props {
@@ -172,6 +173,15 @@ export function ServiceEditor(props: Props) {
             onChange={(cnf) => {
               setService((draft) => {
                 draft.volumes_from = cnf;
+              });
+            }}
+          />
+
+          <PortConfigEditor
+            value={service.ports || []}
+            onChange={(env) => {
+              setService((draft) => {
+                draft.ports = env;
               });
             }}
           />

@@ -173,4 +173,5 @@ export interface ServiceConfig extends CpuConfig {
   depends_on?: ServiceDependency[];
   devices?: DeviceMapping;
   environment?: ComposeEntry[];
+  ports?: ComposeEntry[];
 }
