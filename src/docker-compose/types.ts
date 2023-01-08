@@ -82,6 +82,12 @@ export interface BlockIoConfig {
   device_write_iops: DeviceRate[];
 }
 
+export type ComposeEntry<T = string> = {
+  id: string;
+  title: string;
+  value: T;
+};
+
 export interface CpuConfig {
   cpu_count?: number;
   cpu_percent?: number;
@@ -166,4 +172,5 @@ export interface ServiceConfig extends CpuConfig {
   volumes_from: BindVolumeFrom[];
   depends_on?: ServiceDependency[];
   devices?: DeviceMapping;
+  environment?: ComposeEntry[];
 }

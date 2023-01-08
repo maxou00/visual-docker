@@ -1,7 +1,7 @@
 import {
   Divider,
-  HStack,
   Heading,
+  HStack,
   IconButton,
   Input,
   VStack,
@@ -19,6 +19,7 @@ import BoundDependencies from './BoundDependenciesEditor';
 import BoundSecretConfigEditor from './BoundSecretEditor';
 import BoundVolumeConfigEditor from './BoundVolumeEditor';
 import { CpuConfigEditor } from './CpuConfigEditor';
+import { EnvironmentKeysEditor } from './EnvironmentKeysEditor';
 import CopyVolumesFromEditor from './VolumesFromEditor';
 
 interface Props {
@@ -134,6 +135,16 @@ export function ServiceEditor(props: Props) {
               });
             }}
           />
+
+          <EnvironmentKeysEditor
+            value={service.environment || []}
+            onChange={(env) => {
+              setService((draft) => {
+                draft.environment = env;
+              });
+            }}
+          />
+
           <DVInput
             label="Entry Point"
             placeholder="/code/entrypoint.sh"
@@ -144,7 +155,7 @@ export function ServiceEditor(props: Props) {
                 draft.entrypoint = value;
               });
             }}
-            helperText="entrypoint overrides the default entrypoint for the Docker image (i.e. ENTRYPOINT set by Dockerfile). Compose implementations MUST clear out any default command on the Docker image - both ENTRYPOINT and CMD instruction in the Dockerfile - when entrypoint is configured by a Compose file. If command is also set, it is used as parameter to entrypoint as a replacement for Docker image’s CMD"
+            helperText="Entrypoint overrides the default entrypoint for the Docker image (i.e. ENTRYPOINT set by Dockerfile). Compose implementations MUST clear out any default command on the Docker image - both ENTRYPOINT and CMD instruction in the Dockerfile - when entrypoint is configured by a Compose file. If command is also set, it is used as parameter to entrypoint as a replacement for Docker image’s CMD"
           />
 
           <BoundVolumeConfigEditor
@@ -155,6 +166,7 @@ export function ServiceEditor(props: Props) {
               });
             }}
           />
+
           <CopyVolumesFromEditor
             value={service.volumes_from}
             onChange={(cnf) => {
@@ -163,6 +175,7 @@ export function ServiceEditor(props: Props) {
               });
             }}
           />
+
           <BoundConfigEditor
             value={service.configs}
             onChange={(cnf) => {
@@ -171,6 +184,7 @@ export function ServiceEditor(props: Props) {
               });
             }}
           />
+
           <BoundSecretConfigEditor
             value={service.secrets}
             onChange={(cnf) => {
@@ -179,6 +193,7 @@ export function ServiceEditor(props: Props) {
               });
             }}
           />
+
           <BoundDependencies
             value={service.depends_on}
             onChange={(cnf) => {
@@ -216,6 +231,7 @@ export function ServiceEditor(props: Props) {
               });
             }}
           />
+
           <BlockIoEditor
             value={service.blkio_config}
             onChange={(cnf) => {
