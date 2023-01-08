@@ -1,0 +1,29 @@
+.services {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  grid-template-rows: auto;
+  overflow: hidden;
+}
+
+.panel {
+  height: 100%;
+  overflow-y: auto;
+
+  &__menu {
+    @extend .panel;
+  }
+
+  &__content__wrapper {
+    @extend .panel;
+    background: var(--app-colors-surface);
+    overflow-y: hidden;
+  }
+
+  &__content {
+    @extend .panel;
+    width: 100%;
+    overflow-y: auto;
+  }
+}

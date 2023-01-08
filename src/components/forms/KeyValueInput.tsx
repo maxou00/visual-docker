@@ -5,10 +5,10 @@ import {
   InputGroup,
   InputRightAddon,
   VStack,
-} from "@chakra-ui/react";
-import { nanoid } from "nanoid";
-import { X } from "phosphor-react";
-import { useCallback, useState } from "react";
+} from '@chakra-ui/react';
+import { nanoid } from 'nanoid';
+import { X } from 'phosphor-react';
+import { useCallback, useState } from 'react';
 
 type Entry = {
   id: string;
@@ -16,27 +16,33 @@ type Entry = {
   value: string;
 };
 
-const initial = { id: nanoid(), title: "", value: "" };
+const initial = { id: nanoid(), title: '', value: '' };
+
+interface FieldEntryProps {
+  entry: Entry;
+  onChange: (entry: Entry) => any;
+  onDelete: () => any;
+  keyLabel?: string;
+  valueLabel?: string;
+}
+
 const FieldEntry = ({
   entry,
   onChange,
   onDelete,
-}: {
-  entry: Entry;
-  onChange: (entry: Entry) => any;
-  onDelete: () => any;
-}) => {
+  ...otherProps
+}: FieldEntryProps) => {
   return (
     <HStack w="full" spacing={2}>
       <Input
         flexGrow={1}
-        placeholder="Label"
+        placeholder={otherProps.keyLabel || 'Label'}
         value={entry.title}
         onChange={({ target }) => onChange({ ...entry, title: target.value })}
       />
       <InputGroup flexGrow={2}>
         <Input
-          placeholder="Value"
+          placeholder={otherProps.valueLabel || 'Value'}
           value={entry.value}
           onChange={({ target }) => onChange({ ...entry, value: target.value })}
         />
@@ -48,18 +54,22 @@ const FieldEntry = ({
   );
 };
 
+interface KeyValueInputProps {
+  value: any;
+  onChange: (v: any) => any;
+  fieldProps?: Partial<FieldEntryProps>;
+}
+
 export default function KeyValueInput({
   value,
   onChange,
-}: {
-  value: any;
-  onChange: (v: any) => any;
-}) {
+  ...otherProps
+}: KeyValueInputProps) {
   const [keys, setKeys] = useState<Entry[]>([initial]);
 
   const onAppendKey = useCallback(() => {
     let cpy = [...keys];
-    cpy.push({ id: nanoid(), title: "", value: "" });
+    cpy.push({ id: nanoid(), title: '', value: '' });
     onChange(cpy);
     setKeys(cpy);
   }, [keys, onChange]);
@@ -93,6 +103,7 @@ export default function KeyValueInput({
           <FieldEntry
             entry={k}
             key={k.id}
+            {...otherProps.fieldProps}
             onChange={(entry) => onEntryChange(k.id, entry)}
             onDelete={() => onDeleteEntry(k.id)}
           />
