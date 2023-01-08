@@ -1,18 +1,19 @@
-import { Heading, Text, VStack } from "@chakra-ui/react";
-import KeyValueInput from "../../../components/forms/KeyValueInput";
+import { Text, VStack } from '@chakra-ui/react';
+import KeyValueInput from '../../../components/forms/KeyValueInput';
 
 interface Props {
   value: any;
-  onChange(next: any): any;
+  onChange(payload: any): any;
+  label: string;
 }
 
-export function LabelsEditor(props: Props) {
+export function LabelsEditor({ label, onChange, value }: Props) {
   return (
     <VStack w="full" alignItems="flex-start">
       <Text fontSize="md" fontWeight="medium">
-        Custom Labels
+        {label}
       </Text>
-      <KeyValueInput value={props.value} onChange={props.onChange} />;
+      <KeyValueInput value={value} onChange={onChange} />;
     </VStack>
   );
 }

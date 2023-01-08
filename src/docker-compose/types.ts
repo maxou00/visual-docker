@@ -102,6 +102,11 @@ export interface BindConfigToService {
   mode?: string;
 }
 
+export interface BindLabels {
+  key: string;
+  name: string;
+}
+
 export interface ServiceDependency {
   id?: string;
   label: string;
@@ -168,4 +173,5 @@ export interface ServiceConfig extends CpuConfig {
   volumes_from: BindVolumeFrom[];
   depends_on?: ServiceDependency[];
   devices?: DeviceMapping;
+  labels: BindLabels[];
 }

@@ -1,10 +1,10 @@
-import { Box, Heading, HStack, Text, VStack } from "@chakra-ui/react";
-import { nanoid } from "nanoid";
-import { useCallback, useEffect, useState } from "react";
-import { PrimaryButton } from "../../../components/Buttons/Primary";
-import { useDockerComposeProject } from "../../providers/DockerComposeProvider";
-import { ServiceConfig } from "../../types";
-import { ServiceEditor } from "./ServiceEditor";
+import { Box, HStack, Heading, Text, VStack } from '@chakra-ui/react';
+import { nanoid } from 'nanoid';
+import { useCallback, useEffect, useState } from 'react';
+import { PrimaryButton } from '../../../components/Buttons/Primary';
+import { useDockerComposeProject } from '../../providers/DockerComposeProvider';
+import { ServiceConfig } from '../../types';
+import { ServiceEditor } from './ServiceEditor';
 
 export function ProjectServices() {
   const [services, setServices] = useState<ServiceConfig[]>([]);
@@ -21,11 +21,12 @@ export function ProjectServices() {
   const onAddService = useCallback(() => {
     let newItem: ServiceConfig = {
       id: nanoid(),
-      label: "",
+      label: '',
       configs: [],
       secrets: [],
       volumes: [],
       volumes_from: [],
+      labels: [],
     };
     setServices((prev) => {
       let cp = [...prev];
@@ -72,7 +73,7 @@ export function ProjectServices() {
                   key={s.id}
                   onClick={() => setSelectedService(s)}
                 >
-                  <Text fontFamily="heading">{s.label || "Untitled"}</Text>
+                  <Text fontFamily="heading">{s.label || 'Untitled'}</Text>
                 </HStack>
               );
             })}

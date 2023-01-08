@@ -13,6 +13,7 @@ import { PrimaryButton } from '../../../../components/Buttons/Primary';
 import DVInput from '../../../../components/DVInput/DVInput';
 import { ProvideService } from '../../../providers/CurrentServiceConfig';
 import { ServiceConfig } from '../../../types';
+import { LabelsEditor } from '../../../utils/LabelsEditor';
 import { BlockIoEditor } from './BlockIoConfigEditor';
 import BoundConfigEditor from './BoundConfigEditor';
 import BoundDependencies from './BoundDependenciesEditor';
@@ -35,6 +36,7 @@ export function ServiceEditor(props: Props) {
     secrets: [],
     volumes: [],
     volumes_from: [],
+    labels: [],
   });
 
   useEffect(() => {
@@ -171,6 +173,17 @@ export function ServiceEditor(props: Props) {
               });
             }}
             helperText="expose defines the ports that Compose implementations MUST expose from container. These ports MUST be accessible to linked services and SHOULD NOT be published to the host machine. Only the internal container ports can be specified."
+          />
+
+          <LabelsEditor
+            label="Labels"
+            value={service.labels}
+            onChange={(cnf) => {
+              console.log('cnf-> LabelsEditor', cnf);
+              setService((draft) => {
+                draft.labels = cnf;
+              });
+            }}
           />
 
           <BoundVolumeConfigEditor

@@ -4,17 +4,17 @@ import {
   SecretConfig,
   ServiceConfig,
   VolumeConfig,
-} from "../types";
+} from '../types';
 
 interface AvailableDisk {
   size: number;
-  unit: "GiB" | "TiB";
+  unit: 'GiB' | 'TiB';
 }
 
 interface AvailableCPU {
   count: number;
   speed: number;
-  speed_unit: "ghz";
+  speed_unit: 'ghz';
 }
 
 export interface IDockerComposeState {
