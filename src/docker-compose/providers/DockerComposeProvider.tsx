@@ -3,11 +3,19 @@ import {
   PropsWithChildren,
   useCallback,
   useContext,
+  useEffect,
+  useState,
 } from "react";
 import { useImmerReducer } from "use-immer";
 import { IDockerComposeState } from "../state";
 import { initialState, stateReducer } from "../state/reducer";
-import { ConfigFile, NetworkConfig, SecretConfig, VolumeConfig } from "../types";
+import {
+  ConfigFile,
+  NetworkConfig,
+  SecretConfig,
+  ServiceConfig,
+  VolumeConfig,
+} from "../types";
 
 interface DockerComposeContextType {
   state: IDockerComposeState;
@@ -16,6 +24,7 @@ interface DockerComposeContextType {
   addVolume: (conf: VolumeConfig) => any;
   addConfigFile: (conf: ConfigFile) => any;
   addSecret: (conf: SecretConfig) => any;
+  addService: (conf: ServiceConfig) => any;
 }
 
 const Context = createContext<DockerComposeContextType>(undefined as any);
@@ -32,6 +41,7 @@ export const useDockerComposeProject = () => {
 
 export function DockerComposeProvider(props: PropsWithChildren<{}>) {
   const [state, dispatch] = useImmerReducer(stateReducer, initialState);
+  const [init, setInit] = useState(false);
 
   const setProjectName = useCallback((name: string) => {
     dispatch({ type: "SET_PROJECT_NAME", payload: name });
@@ -53,6 +63,33 @@ export function DockerComposeProvider(props: PropsWithChildren<{}>) {
     dispatch({ type: "PUT_SECRET", payload: conf });
   }, []);
 
+  const addService = useCallback((conf: ServiceConfig) => {
+    dispatch({ type: "PUT_SERVICE", payload: conf });
+  }, []);
+
+  useEffect(() => {
+    let stored = localStorage.getItem("docker:compose/latest");
+    if (stored) {
+      let decoded = JSON.parse(stored);
+      console.log("Decoded from storage ", decoded);
+      if (decoded) {
+        dispatch({ type: "FILL_STATE", payload: decoded });
+      }
+    }
+    setInit(true);
+  }, []);
+
+  useEffect(() => {
+    if (state && init) {
+      console.log(state);
+      localStorage.setItem("docker:compose/latest", JSON.stringify(state));
+    }
+  }, [state, init]);
+
+  if (!init) {
+    return <></>;
+  }
+
   return (
     <Context.Provider
       value={{
@@ -61,7 +98,8 @@ export function DockerComposeProvider(props: PropsWithChildren<{}>) {
         addNetwork,
         addVolume,
         addConfigFile,
-        addSecret
+        addSecret,
+        addService,
       }}
     >
       {props.children}

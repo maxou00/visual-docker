@@ -3,7 +3,7 @@ $container: 1280px;
 :root {
   --colors-divider-on-background: #f9f9f940;
   --colors-divider-on-surface: #f9f9f940;
-  
+
   --colors-on-primary: #fafafa;
 
   --fonts-heading: "Poppins", sans-serif;
@@ -71,7 +71,6 @@ a {
     --size-container-max-width: calc(100vw - 24px);
   }
 }
-
 
 *:focus {
   box-shadow: none !important;

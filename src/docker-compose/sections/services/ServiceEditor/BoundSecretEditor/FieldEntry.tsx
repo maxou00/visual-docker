@@ -6,34 +6,20 @@ import {
   HStack,
   Input,
   Select,
-  Text,
   VStack,
 } from "@chakra-ui/react";
-import { nanoid } from "nanoid";
-import { useCallback, useState } from "react";
-import { toast } from "react-hot-toast";
-import { PrimaryButton } from "../../../../../components/Buttons/Primary";
 import { useDockerComposeProject } from "../../../../providers/DockerComposeProvider";
 import { BindConfigToService } from "../../../../types";
 
-interface Props {
-  value?: BindConfigToService[];
-  onChange: (update: BindConfigToService[]) => any;
-}
-
-type Entry = BindConfigToService;
-
-const initial: Entry = { id: nanoid(), source: "" };
-
-const FieldEntry = ({
+export default function FieldEntry({
   entry,
   onChange,
   onDelete,
 }: {
-  entry: Entry;
-  onChange: (entry: Entry) => any;
+  entry: BindConfigToService;
+  onChange: (entry: BindConfigToService) => any;
   onDelete: () => any;
-}) => {
+}) {
   const composer = useDockerComposeProject();
 
   return (
@@ -45,11 +31,11 @@ const FieldEntry = ({
           onChange({ ...entry, source: nodeEv.target.value });
         }}
       >
-        <option value="">Choose a Config</option>
-        {composer.state.configs.map((config) => {
+        <option value="">Choose a Secret</option>
+        {composer.state.secrets.map((secret) => {
           return (
-            <option key={config.label} value={config.label}>
-              {config.label}
+            <option key={secret.label} value={secret.label}>
+              {secret.label}
             </option>
           );
         })}
@@ -79,7 +65,7 @@ const FieldEntry = ({
             placeholder=""
             value={entry.mode}
             onChange={({ target }) =>
-              onChange({ ...entry, mode: target.value })
+              onChange({ ...entry, target: target.value })
             }
           />
           <FormHelperText>
@@ -126,80 +112,6 @@ const FieldEntry = ({
           Unbind this config
         </Button>
       </HStack>
-    </VStack>
-  );
-};
-
-export default function BoundConfigEditor({
-  value,
-  onChange,
-}: {
-  value: any;
-  onChange: (v: any) => any;
-}) {
-  const [keys, setKeys] = useState<Entry[]>([]);
-
-  const onAppendKey = useCallback(() => {
-    let cpy = [...keys];
-    let collide = cpy.findIndex((c) => c.source === "");
-    if (collide > -1) {
-      toast.error(
-        "Please edit the existing source entry before adding another"
-      );
-      return;
-    }
-    cpy.push({ id: nanoid(), source: "" });
-    onChange(cpy);
-    setKeys(cpy);
-  }, [keys, onChange]);
-
-  const onEntryChange = useCallback(
-    (id: string, entry: Entry) => {
-      let cpy = [...keys];
-      let index = cpy.findIndex((k) => k.id === id);
-      if (index > -1) {
-        cpy[index] = entry;
-      }
-      onChange(cpy);
-      setKeys(cpy);
-    },
-    [keys, onChange]
-  );
-
-  const onDeleteEntry = useCallback(
-    (id: string) => {
-      const cpy = [...keys].filter((item) => item.id !== id);
-      onChange(cpy);
-      setKeys(cpy);
-    },
-    [keys, onChange]
-  );
-
-  return (
-    <VStack w="full" alignItems="flex-start" spacing={4}>
-      <VStack w="full" alignItems="flex-start" spacing={2}>
-        <Text>Associated Configs</Text>
-        <Text fontSize="sm">
-          Here are listed configurations bound to this service.
-        </Text>
-      </VStack>
-      <VStack w="full" spacing={4}>
-        {keys.map((k) => {
-          return (
-            <FieldEntry
-              entry={k}
-              key={k.id}
-              onChange={(entry) => onEntryChange(k.id || "", entry)}
-              onDelete={() => onDeleteEntry(k.id || "")}
-            />
-          );
-        })}
-        <HStack w="full" justifyContent="flex-end">
-          <PrimaryButton variant="ghost" size="sm" onClick={onAppendKey}>
-            Bind another config
-          </PrimaryButton>
-        </HStack>
-      </VStack>
     </VStack>
   );
 }

@@ -11,6 +11,7 @@ import {
   ModalProps,
   VStack,
 } from "@chakra-ui/react";
+import { nanoid } from "nanoid";
 import { useCallback } from "react";
 import { useImmer } from "use-immer";
 import { VolumeEditor } from ".";
@@ -18,10 +19,15 @@ import { PrimaryButton } from "../../../../components/Buttons/Primary";
 import { useDockerComposeProject } from "../../../providers/DockerComposeProvider";
 import { VolumeConfig } from "../../../types";
 
+const initial: VolumeConfig = {
+  label: "",
+};
+
 export function CreateVolumeModal(props: Omit<ModalProps, "children">) {
   const [content, setContent] = useImmer<{ item: VolumeConfig }>({
     item: {
-      label: "",
+      id: nanoid(),
+      ...initial,
     },
   });
 
@@ -30,6 +36,12 @@ export function CreateVolumeModal(props: Omit<ModalProps, "children">) {
   const onSubmit = useCallback(() => {
     addVolume(content.item);
     if (props.onClose) {
+      setContent({
+        item: {
+          id: nanoid(),
+          ...initial,
+        },
+      });
       props.onClose();
     }
   }, [content, props.onClose]);

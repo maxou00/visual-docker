@@ -16,7 +16,7 @@ import WeightDeviceInput from "./WeightDeviceEditor";
 
 interface Props {
   value?: BlockIoConfig;
-  onChange: (config:BlockIoConfig) => any;
+  onChange: (config: BlockIoConfig) => any;
 }
 
 export function BlockIoEditor(props: Props) {
@@ -27,13 +27,13 @@ export function BlockIoEditor(props: Props) {
     device_write_bps: [],
     device_read_iops: [],
     device_write_iops: [],
-    ...props.value
+    ...props.value,
   });
 
   const onWeightChange = useCallback((weight: number) => {
-    update(draft => {
+    update((draft) => {
       draft.weight = weight;
-    })
+    });
   }, []);
 
   useEffect(() => {

@@ -168,14 +168,15 @@ export function NetworkEditor(props: Props) {
         {!content.external && (
           <LabelsEditor value={content.labels} onChange={onLabelsChange} />
         )}
-        {
-          content.external && <Alert colorScheme="orange" rounded="md">
+        {content.external && (
+          <Alert colorScheme="orange" rounded="md">
             <AlertTitle>Other options have been disabled.</AlertTitle>
             <AlertDescription>
-              External networks are not managed by compose. Thus, advanced options are useless.
+              External networks are not managed by compose. Thus, advanced
+              options are useless.
             </AlertDescription>
           </Alert>
-        }
+        )}
       </VStack>
     </VStack>
   );

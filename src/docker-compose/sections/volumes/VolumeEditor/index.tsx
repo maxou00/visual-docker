@@ -150,7 +150,11 @@ export function VolumeEditor(props: Props) {
               : "Custom volume name"}
           </FormLabel>
           <Input
-            value={typeof content.external === "object" ? content.external?.name : (content.name || "")}
+            value={
+              typeof content.external === "object"
+                ? content.external?.name
+                : content.name || ""
+            }
             fontSize="md"
             onChange={onNameChange}
             variant="outline"

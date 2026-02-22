@@ -11,17 +11,23 @@ import {
   ModalProps,
   VStack,
 } from "@chakra-ui/react";
+import { nanoid } from "nanoid";
 import { useCallback } from "react";
 import { useImmer } from "use-immer";
 import { ConfigEditor } from ".";
 import { PrimaryButton } from "../../../../components/Buttons/Primary";
 import { useDockerComposeProject } from "../../../providers/DockerComposeProvider";
-import { ConfigFile, VolumeConfig } from "../../../types";
+import { ConfigFile } from "../../../types";
+
+const initial = {
+  label: "",
+};
 
 export function CreateConfigModal(props: Omit<ModalProps, "children">) {
   const [content, setContent] = useImmer<{ item: ConfigFile }>({
     item: {
-      label: "",
+      id: nanoid(),
+      ...initial,
     },
   });
 
@@ -30,6 +36,12 @@ export function CreateConfigModal(props: Omit<ModalProps, "children">) {
   const onSubmit = useCallback(() => {
     addConfigFile(content.item);
     if (props.onClose) {
+      setContent({
+        item: {
+          id: nanoid(),
+          ...initial,
+        },
+      });
       props.onClose();
     }
   }, [content, props.onClose]);

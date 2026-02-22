@@ -63,9 +63,7 @@ export function ProjectNameEditor(props: Omit<ModalProps, "children">) {
           </VStack>
         </ModalBody>
         <ModalFooter>
-          <PrimaryButton onClick={onSubmit}>
-            Use this name
-          </PrimaryButton>
+          <PrimaryButton onClick={onSubmit}>Use this name</PrimaryButton>
         </ModalFooter>
       </ModalContent>
     </Modal>

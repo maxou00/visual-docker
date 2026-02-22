@@ -6,22 +6,12 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
-  Heading,
-  HStack,
   Input,
-  Link,
-  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import { ChangeEvent, useCallback, useEffect } from "react";
 import { useImmer } from "use-immer";
-import {
-  ConfigFile,
-  NetworkConfig,
-  SecretConfig,
-  VolumeConfig,
-} from "../../../types";
-import { LabelsEditor } from "../../../utils/LabelsEditor";
+import { SecretConfig } from "../../../types";
 
 interface Props {
   value?: SecretConfig;
@@ -175,8 +165,8 @@ export function SecretEditor(props: Props) {
           <Alert colorScheme="orange" rounded="md">
             <AlertTitle>Other options have been disabled.</AlertTitle>
             <AlertDescription>
-              External secrets are not managed by compose. Thus, file path and environment options
-              are useless.
+              External secrets are not managed by compose. Thus, file path and
+              environment options are useless.
             </AlertDescription>
           </Alert>
         )}

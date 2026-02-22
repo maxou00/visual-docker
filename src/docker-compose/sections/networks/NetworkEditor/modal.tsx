@@ -7,16 +7,11 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Heading,
-  Modal,
-  ModalBody,
   ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   ModalProps,
   VStack,
 } from "@chakra-ui/react";
+import { nanoid } from "nanoid";
 import { useCallback } from "react";
 import { useImmer } from "use-immer";
 import { NetworkEditor } from ".";
@@ -24,14 +19,19 @@ import { PrimaryButton } from "../../../../components/Buttons/Primary";
 import { useDockerComposeProject } from "../../../providers/DockerComposeProvider";
 import { NetworkConfig } from "../../../types";
 
+let initial = {
+  label: "",
+  internal: true,
+  external: false,
+  driver: "bridge",
+  driver_opts: {},
+};
+
 export function CreateNetworkModal(props: Omit<ModalProps, "children">) {
   const [content, setContent] = useImmer<{ item: NetworkConfig }>({
     item: {
-      label: "",
-      internal: true,
-      external: false,
-      driver: "bridge",
-      driver_opts: {},
+      id: nanoid(),
+      ...(initial as any),
     },
   });
 
@@ -40,6 +40,12 @@ export function CreateNetworkModal(props: Omit<ModalProps, "children">) {
   const onSubmit = useCallback(() => {
     addNetwork(content.item);
     if (props.onClose) {
+      setContent({
+        item: {
+          id: nanoid(),
+          ...(initial as any),
+        },
+      });
       props.onClose();
     }
   }, [content, props.onClose]);

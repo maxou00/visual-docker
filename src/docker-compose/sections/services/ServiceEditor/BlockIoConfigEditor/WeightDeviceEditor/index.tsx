@@ -1,11 +1,4 @@
-import {
-  HStack,
-  IconButton,
-  Input,
-  InputGroup,
-  InputRightAddon,
-  VStack,
-} from "@chakra-ui/react";
+import { HStack, IconButton, Input, VStack } from "@chakra-ui/react";
 import { nanoid } from "nanoid";
 import { X } from "phosphor-react";
 import { useCallback, useState } from "react";
@@ -19,7 +12,7 @@ interface Props {
 }
 
 type Entry = {
-    id: string;
+  id: string;
   path: string;
   weight: number;
 };
@@ -96,11 +89,7 @@ export default function WeightDeviceInput({
 
   const onDeleteEntry = useCallback(
     (id: string) => {
-      let cpy = [...keys];
-      let index = cpy.findIndex((k) => k.path === id);
-      if (index > -1) {
-        cpy.splice(index, 1);
-      }
+      const cpy = [...keys].filter((item) => item.id !== id);
       onChange(cpy);
       setKeys(cpy);
     },

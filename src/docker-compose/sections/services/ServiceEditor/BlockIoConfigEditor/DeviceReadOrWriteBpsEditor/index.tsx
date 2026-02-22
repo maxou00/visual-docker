@@ -1,9 +1,4 @@
-import {
-  HStack,
-  IconButton,
-  Input,
-  VStack,
-} from "@chakra-ui/react";
+import { HStack, IconButton, Input, VStack } from "@chakra-ui/react";
 import { nanoid } from "nanoid";
 import { X } from "phosphor-react";
 import { useCallback, useState } from "react";
@@ -22,7 +17,7 @@ type Entry = {
   rate: string;
 };
 
-const initial = { id: nanoid(), path: "", rate: '120mb' };
+const initial = { id: nanoid(), path: "", rate: "120mb" };
 
 const FieldEntry = ({
   entry,
@@ -71,7 +66,7 @@ export default function DeviceReadOrWriteBpsInput({
       toast.error("Please edit the existing path entry before adding another");
       return;
     }
-    cpy.push({ id: nanoid(), path: "", rate: '120mb' });
+    cpy.push({ id: nanoid(), path: "", rate: "120mb" });
     onChange(cpy);
     setKeys(cpy);
   }, [keys, onChange]);
@@ -91,11 +86,7 @@ export default function DeviceReadOrWriteBpsInput({
 
   const onDeleteEntry = useCallback(
     (id: string) => {
-      let cpy = [...keys];
-      let index = cpy.findIndex((k) => k.path === id);
-      if (index > -1) {
-        cpy.splice(index, 1);
-      }
+      const cpy = [...keys].filter((item) => item.id !== id);
       onChange(cpy);
       setKeys(cpy);
     },

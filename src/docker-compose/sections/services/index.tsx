@@ -1,17 +1,11 @@
-import {
-  Box,
-  Center,
-  Container,
-  Heading,
-  HStack,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
-import { nanoid } from "nanoid";
-import { useCallback, useState } from "react";
-import { PrimaryButton } from "../../../components/Buttons/Primary";
-import { ServiceConfig } from "../../types";
-import { ServiceEditor } from "./ServiceEditor";
+import { Box, Heading, HStack, Text, VStack } from '@chakra-ui/react';
+import { nanoid } from 'nanoid';
+import { useCallback, useEffect, useState } from 'react';
+import { PrimaryButton } from '../../../components/Buttons/Primary';
+import { useDockerComposeProject } from '../../providers/DockerComposeProvider';
+import { ServiceConfig } from '../../types';
+import { ServiceEditor } from './ServiceEditor';
+import styles from './styles/index.module.scss';
 
 export function ProjectServices() {
   const [services, setServices] = useState<ServiceConfig[]>([]);
@@ -19,10 +13,21 @@ export function ProjectServices() {
     ServiceConfig | undefined
   >();
 
+  const composer = useDockerComposeProject();
+
+  useEffect(() => {
+    setServices(composer.state.services);
+  }, [composer.state.services]);
+
   const onAddService = useCallback(() => {
-    let newItem = {
+    let newItem: ServiceConfig = {
       id: nanoid(),
-      label: "",
+      label: '',
+      configs: [],
+      secrets: [],
+      volumes: [],
+      volumes_from: [],
+      labels: [],
     };
     setServices((prev) => {
       let cp = [...prev];
@@ -44,11 +49,12 @@ export function ProjectServices() {
       }
       return cp;
     });
+    composer.addService(s);
   }, []);
 
   return (
-    <HStack w="full" h="full" overflow="hidden" alignItems="flex-start">
-      <Box w="360px" h="full" overflowY="auto">
+    <Box className={styles.services}>
+      <Box className={styles.panel__menu}>
         <HStack h="56px" w="full" alignItems="center" px={2}>
           <Heading fontSize="xl">Services</Heading>
         </HStack>
@@ -68,7 +74,7 @@ export function ProjectServices() {
                   key={s.id}
                   onClick={() => setSelectedService(s)}
                 >
-                  <Text fontFamily="heading">{s.label || "Untitled"}</Text>
+                  <Text fontFamily="heading">{s.label || 'Untitled'}</Text>
                 </HStack>
               );
             })}
@@ -91,8 +97,8 @@ export function ProjectServices() {
           </VStack>
         )}
       </Box>
-      <Box h="full" overflow="hidden" bg="surface" flexGrow={1}>
-        <Box w="full" h="full" overflowY="auto">
+      <Box className={styles.panel__content__wrapper}>
+        <Box className={styles.panel__content}>
           {selectedService && (
             <ServiceEditor
               value={selectedService}
@@ -101,6 +107,6 @@ export function ProjectServices() {
           )}
         </Box>
       </Box>
-    </HStack>
+    </Box>
   );
 }
